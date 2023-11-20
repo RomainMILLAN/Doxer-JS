@@ -1,0 +1,21 @@
+{
+  "name": "doxer-js",
+  "version": "1.0.0",
+  "description": "A discord bot made for the Doxer community.",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node dist/index.js"
+  },
+  "author": "Romain MILLAN",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.5.7",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "discord.js": "^14.13.0",
+    "dotenv": "^16.3.1",
+    "moment": "^2.29.4"
+  }
+}
