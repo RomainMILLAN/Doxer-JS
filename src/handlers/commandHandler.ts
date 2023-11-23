@@ -7,20 +7,16 @@ import { sendInfo, sendDebug } from "../manager/consoleManager";
 module.exports = async (client: Client) => {
 
     const body = [];
-    let slashCommandsDir = join(__dirname, "../slashCommands");
 
-    readdirSync(slashCommandsDir).forEach(file => {
-        if(!file.endsWith(".js")) {
-            return;
-        }
+    loadCommands(
+        join(__dirname, "../slashCommands"),
+        client
+    );
 
-        const command: SlashCommand = require(`${slashCommandsDir}/${file}`).command;
-
-        body.push(command.data.toJSON());
-        client.slashCommands.set(command.name, command);
-
-        sendDebug(`Command \x1b[4m${command.name}\x1b[0m charged`);
-    });
+    loadCommands(
+        join(__dirname, "../slashCommands/discordProfiler"),
+        client
+    );
 
     const rest = new REST({
         version: '10'
@@ -33,5 +29,18 @@ module.exports = async (client: Client) => {
         console.error(error);
     }
 
-
 } 
+
+function loadCommands(slashCommandsDir: string, client: Client) {
+    readdirSync(slashCommandsDir).forEach(file => {
+        if(!file.endsWith(".js")) {
+            return;
+        }
+
+        var command: SlashCommand = require(`${slashCommandsDir}/${file}`).command;
+
+        client.slashCommands.set(command.name, command);
+
+        sendDebug(`Command \x1b[4m${command.name}\x1b[0m charged`);
+    });
+}

@@ -1,4 +1,4 @@
-import { EmbedBuilder } from "discord.js";
+import { EmbedBuilder, ColorResolvable } from "discord.js";
 
 export function errorBuilder(permission: string = null) {
     var embed = new EmbedBuilder()
@@ -13,6 +13,15 @@ export function errorBuilder(permission: string = null) {
                 value: `\`${permission}\``
             });
     }
+
+    return embed;
+}
+
+export function coloredEmbed(title: string = null, description: string = null, color: string = null) {
+    var embed = new EmbedBuilder()
+        .setTitle(title)
+        .setDescription(description)
+        .setColor(color as ColorResolvable);
 
     return embed;
 }
