@@ -2,7 +2,7 @@ import { Client } from "discord.js";
 import { readdirSync } from "fs";
 import { join } from "path";
 import { BotEvent } from "../../types";
-import sendInfo from "../manager/consoleManager";
+import { sendInfo, sendDebug } from "../manager/consoleManager";
 
 module.exports = (client: Client) => {
 
@@ -18,7 +18,7 @@ module.exports = (client: Client) => {
             client.on(event.name, (...args) => event.execute(...args));
         }
 
-        sendInfo(`Event \x1b[4m${event.name}\x1b[0m charged`);
+        sendDebug(`Event \x1b[4m${event.name}\x1b[0m charged`);
     });
 
 } 

@@ -2,7 +2,7 @@ import { Client, REST, Routes } from "discord.js";
 import { readdirSync } from "fs";
 import { join } from "path";
 import { SlashCommand } from "../../types";
-import sendInfo from "../manager/consoleManager";
+import { sendInfo, sendDebug } from "../manager/consoleManager";
 
 module.exports = async (client: Client) => {
 
@@ -19,7 +19,7 @@ module.exports = async (client: Client) => {
         body.push(command.data.toJSON());
         client.slashCommands.set(command.name, command);
 
-        sendInfo(`Command \x1b[4m${command.name}\x1b[0m charged`);
+        sendDebug(`Command \x1b[4m${command.name}\x1b[0m charged`);
     });
 
     const rest = new REST({

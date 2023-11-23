@@ -15,7 +15,7 @@ export async function sendUptime() {
                 fields: [
                     {
                         name: "Service name",
-                        value: "EDT UM"
+                        value: "Doxer JS"
                     },
                     {
                         name: "State",

@@ -1,12 +1,9 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const fs_1 = require("fs");
 const path_1 = require("path");
-const consoleManager_1 = __importDefault(require("../manager/consoleManager"));
+const consoleManager_1 = require("../manager/consoleManager");
 module.exports = async (client) => {
     const body = [];
     let slashCommandsDir = (0, path_1.join)(__dirname, "../slashCommands");
@@ -17,7 +14,7 @@ module.exports = async (client) => {
         const command = require(`${slashCommandsDir}/${file}`).command;
         body.push(command.data.toJSON());
         client.slashCommands.set(command.name, command);
-        (0, consoleManager_1.default)(`Command \x1b[4m${command.name}\x1b[0m charged`);
+        (0, consoleManager_1.sendDebug)(`Command \x1b[4m${command.name}\x1b[0m charged`);
     });
     const rest = new discord_js_1.REST({
         version: '10'

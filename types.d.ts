@@ -12,6 +12,8 @@ declare global {
             APP_ENV: string,
             APP_DEBUGING: string,
             DISCORD_WEBHOOK_URL: string,
+            RM_CLIENT_ID: string,
+            RM_PROJECT_ID: string,
         }
     }
 }
