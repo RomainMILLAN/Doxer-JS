@@ -9,7 +9,7 @@ export const command: SlashCommand = {
     data: new SlashCommandBuilder()
         .setName("profil")
         .setDescription("Affiche le profile d'un utilisateur")
-        .setDMPermission(false)
+        .setDMPermission(true)
         .addUserOption(option => 
             option
                 .setName("user")

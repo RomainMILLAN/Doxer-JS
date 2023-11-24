@@ -10,7 +10,7 @@ exports.command = {
     data: new discord_js_1.SlashCommandBuilder()
         .setName("profil")
         .setDescription("Affiche le profile d'un utilisateur")
-        .setDMPermission(false)
+        .setDMPermission(true)
         .addUserOption(option => option
         .setName("user")
         .setDescription("Utilisateur")

@@ -12,14 +12,13 @@ exports.command = {
     data: new discord_js_1.SlashCommandBuilder()
         .setName("avatar")
         .setDescription("Affiche l'avatar d'un utilisateur")
-        .setDMPermission(false)
+        .setDMPermission(true)
         .addUserOption(option => option
         .setName("user")
         .setDescription("Utilisateur")
         .setRequired(true)),
     execute: async (interaction) => {
         const user = interaction.options.getUser('user');
-        console.log(user);
         if (!user) {
             interaction.reply({
                 embeds: [

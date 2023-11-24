@@ -7,7 +7,8 @@ export const command: SlashCommand = {
   name: "info",
   data: new SlashCommandBuilder()
     .setName("info")
-    .setDescription("Affiche les informations du bot"),
+    .setDescription("Affiche les informations du bot")
+    .setDMPermission(true),
   execute: async (interaction) => {
     interaction.reply({
       embeds: [

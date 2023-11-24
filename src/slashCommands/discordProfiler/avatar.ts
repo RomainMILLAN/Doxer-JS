@@ -9,7 +9,7 @@ export const command: SlashCommand = {
     data: new SlashCommandBuilder()
         .setName("avatar")
         .setDescription("Affiche l'avatar d'un utilisateur")
-        .setDMPermission(false)
+        .setDMPermission(true)
         .addUserOption(option => 
             option
                 .setName("user")
@@ -19,7 +19,6 @@ export const command: SlashCommand = {
     execute: async (interaction) => {
         const user = interaction.options.getUser('user');
 
-        console.log(user);
         if(!user) {
             interaction.reply({
                 embeds: [
