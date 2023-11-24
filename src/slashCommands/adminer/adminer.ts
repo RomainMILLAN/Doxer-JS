@@ -6,7 +6,7 @@ import {
 } from "discord.js";
 import { xMark, whiteCheckMark } from "../../manager/enum/icon";
 import { SlashCommand } from "../../../types";
-import { errorBuilder } from "../../manager/embedBuilder";
+import { permErrorBuilder } from "../../manager/embedBuilder";
 import sentry from "../../manager/sentry";
 
 export const command: SlashCommand = {
@@ -22,7 +22,7 @@ export const command: SlashCommand = {
     if (false == (interaction.member.roles as GuildMemberRoleManager).cache.has(roleOpId)) {
         interaction.reply({
             embeds: [
-                errorBuilder('OP')
+                permErrorBuilder('OP')
             ],
             ephemeral: true,
         });

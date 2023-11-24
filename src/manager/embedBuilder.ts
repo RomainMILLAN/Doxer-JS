@@ -1,6 +1,6 @@
 import { EmbedBuilder, ColorResolvable } from "discord.js";
 
-export function errorBuilder(permission: string = null) {
+export function permErrorBuilder(permission: string = null) {
     var embed = new EmbedBuilder()
         .setTitle("🚫 Accès refusé")
         .setDescription("Vous n'avez pas la permission d'utiliser cette commande.")
@@ -17,6 +17,14 @@ export function errorBuilder(permission: string = null) {
     return embed;
 }
 
+export function errorBuilder(title: string = null, description: string = null) {
+    return coloredEmbed(
+        `🚫 ${title}`,
+        description,
+        "Red",
+    );
+}
+
 export function coloredEmbed(title: string = null, description: string = null, color: string = null) {
     var embed = new EmbedBuilder()
         .setTitle(title)
@@ -26,4 +34,4 @@ export function coloredEmbed(title: string = null, description: string = null, c
     return embed;
 }
 
-export default errorBuilder;
+export default coloredEmbed;

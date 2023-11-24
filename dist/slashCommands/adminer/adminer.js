@@ -20,7 +20,7 @@ exports.command = {
         if (false == interaction.member.roles.cache.has(roleOpId)) {
             interaction.reply({
                 embeds: [
-                    (0, embedBuilder_1.errorBuilder)('OP')
+                    (0, embedBuilder_1.permErrorBuilder)('OP')
                 ],
                 ephemeral: true,
             });
