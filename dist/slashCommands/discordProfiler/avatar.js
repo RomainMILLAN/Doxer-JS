@@ -19,6 +19,7 @@ exports.command = {
         .setRequired(true)),
     execute: async (interaction) => {
         const user = interaction.options.getUser('user');
+        console.log(user);
         if (!user) {
             interaction.reply({
                 embeds: [
@@ -33,10 +34,11 @@ exports.command = {
             embeds: [
                 new discord_js_1.EmbedBuilder()
                     .setTitle(`🪟 Avatar de ${user.displayName}`)
-                    .setImage(user.avatarURL.toString())
+                    .setDescription(`Cliquez [ici](${user.avatarURL().toString()}) pour l\'afficher en grand`)
+                    .setImage(user.avatarURL().toString())
                     .setColor(discord_js_1.Colors.Navy)
             ]
         });
-        (0, sentry_1.default)(interaction.client, 'DiscordProfiler/Avatar', `Affichage de l'avatar de ${user.displayName}`, interaction.user, `/avatar user:${user.globalName}`);
+        (0, sentry_1.default)(interaction.client, 'DiscordProfiler/Avatar', `Visualisation de l'avatar de ${user.displayName}`, interaction.user, `/avatar user:${user.globalName}`);
     }
 };

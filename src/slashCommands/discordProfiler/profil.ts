@@ -1,14 +1,14 @@
 import { SlashCommandBuilder, Colors, EmbedBuilder } from "discord.js";
 import { SlashCommand } from "../../../types";
 import { coloredEmbed } from "../../manager/embedBuilder";
-import sentry from "../../manager/sentry";
-import { sendDebug } from "../../manager/consoleManager";
+import { sentry } from "../../manager/sentry";
+import { whiteCheckMark, xMark } from "../../manager/enum/icon";
 
 export const command: SlashCommand = {
-    name: "avatar",
+    name: "profil",
     data: new SlashCommandBuilder()
-        .setName("avatar")
-        .setDescription("Affiche l'avatar d'un utilisateur")
+        .setName("profil")
+        .setDescription("Affiche le profile d'un utilisateur")
         .setDMPermission(false)
         .addUserOption(option => 
             option
@@ -19,7 +19,6 @@ export const command: SlashCommand = {
     execute: async (interaction) => {
         const user = interaction.options.getUser('user');
 
-        console.log(user);
         if(!user) {
             interaction.reply({
                 embeds: [
@@ -34,10 +33,10 @@ export const command: SlashCommand = {
 
             sentry(
                 interaction.client,
-                'DiscordProfiler/Avatar',
-                'Utilisateur indiqué non trouvée',
+                'DiscordProfiler/Profil',
+                xMark + ` Utilisateur indiqué non trouvée`,
                 interaction.user,
-                `/avatar user:`
+                `/Profil user:`
             )
 
             return;
@@ -46,17 +45,35 @@ export const command: SlashCommand = {
         interaction.reply({
             embeds: [
                 new EmbedBuilder()
-                    .setTitle(`🪟 Avatar de ${user.displayName}`)
-                    .setDescription(`Cliquez [ici](${user.avatarURL().toString()}) pour l\'afficher en grand`)
-                    .setImage(user.avatarURL().toString())
+                    .setTitle(`:jigsaw: Profile de ${user.displayName}`)
+                    .setDescription(`Description de ${user.displayName}`)
+                    .addFields(
+                        {
+                            name: '__Identifiant:__',
+                            value: `\`${user.id}\``,
+                        },
+                        {
+                            name: '__Nom:__',
+                            value: `\`${user.globalName.toString()}\``,
+                        },
+                        {
+                            name: '__URL de l\'avatar:__',
+                            value: `${user.avatarURL()}`,
+                        },
+                        {
+                            name: '__Couleur Hexadecimal:__',
+                            value: `${user.hexAccentColor ?? '*Aucune couleur d\'accentuation*'}`,
+                        },
+                    )
                     .setColor(Colors.Navy)
-            ]
+            ],
+            ephemeral: true,
         });
 
         sentry(
             interaction.client,
             'DiscordProfiler/Avatar',
-            `Visualisation de l'avatar de ${user.displayName}`,
+            whiteCheckMark + ` Visualisation de l'avatar de ${user.displayName}`,
             interaction.user,
             `/avatar user:${user.globalName}`,
         )

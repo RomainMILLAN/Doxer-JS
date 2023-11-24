@@ -5,9 +5,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.command = void 0;
 const discord_js_1 = require("discord.js");
-const icon_1 = require("../manager/enum/icon");
-const embedBuilder_1 = require("../manager/embedBuilder");
-const sentry_1 = __importDefault(require("../manager/sentry"));
+const icon_1 = require("../../manager/enum/icon");
+const embedBuilder_1 = require("../../manager/embedBuilder");
+const sentry_1 = __importDefault(require("../../manager/sentry"));
 exports.command = {
     name: "adminer",
     data: new discord_js_1.SlashCommandBuilder()
