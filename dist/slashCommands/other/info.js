@@ -21,6 +21,7 @@ exports.command = {
                     value: "[Lien vers Github](https://github.com/RomainMILLAN/Doxer-JS)",
                 }),
             ],
+            ephemeral: true,
         });
         (0, sentry_1.sentry)(interaction.client, "Informations", icon_1.whiteCheckMark + " Affichage des informations du bot", interaction.user, '/info');
         return;

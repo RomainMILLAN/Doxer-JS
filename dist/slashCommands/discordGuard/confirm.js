@@ -52,7 +52,7 @@ exports.command = {
         const roleStaffId = process.env.R_STAFF;
         const userSelect = interaction.guild.members.cache.get(interaction.options.get('user').value.toString());
         const roleSelect = interaction.options.get('role');
-        let command = `/confirm user:${userSelect.displayName.toString()} role:${roleSelect.value.toString()}`;
+        let command = `/confirm user:${userSelect.id.toString()} role:${roleSelect.value.toString()}`;
         if (false == interaction.member.roles.cache.has(roleStaffId)) {
             interaction.reply({
                 embeds: [

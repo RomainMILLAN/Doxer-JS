@@ -51,6 +51,7 @@ exports.command = {
             embeds: [
                 embed,
             ],
+            ephemeral: true,
         });
         (0, sentry_1.default)(interaction.client, 'Adminer', icon_1.whiteCheckMark + ' Visualisation des données administrateurs', interaction.user, `/admin`);
     },

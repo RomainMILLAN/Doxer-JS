@@ -23,6 +23,7 @@ export const command: SlashCommand = {
               "[Lien vers Github](https://github.com/RomainMILLAN/Doxer-JS)",
           }),
       ],
+      ephemeral: true,
     });
 
     sentry(

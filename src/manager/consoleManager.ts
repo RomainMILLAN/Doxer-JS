@@ -43,4 +43,15 @@ export function sendConsole(body: string) {
     )
 }
 
+export function sendLog(body: string) {
+
+    console.log(
+        "\x1b[1m[" + date.getDay()+"/"+(date.getMonth()+1)+"/"+date.getFullYear() + "]\x1b[0m "
+        +
+         "\x1b[43mLOG\x1b[0m "
+        +
+        body
+    )
+}
+
 export default sendInfo;
