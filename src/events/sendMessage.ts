@@ -8,6 +8,8 @@ const event: BotEvent = {
     async execute(message: Message) {
         if(message.author.bot) { return; }
 
+        if(null == process.env.TC_DISCORD_SENTRY || '' == process.env.TC_DISCORD_SENTRY) { return; }
+
         sendLog(
             message.author.globalName
             + ' | ' + message.content
