@@ -53,10 +53,6 @@ exports.command = {
         const userSelect = interaction.guild.members.cache.get(interaction.options.get('user').value.toString());
         const roleSelect = interaction.options.get('role');
         let command = `/confirm user:${userSelect.displayName.toString()} role:${roleSelect.value.toString()}`;
-        console.log(roleSelect);
-        console.log(roleSelect.value);
-        console.log(roleSelect.name);
-        console.log(roleSelect.role.name);
         if (false == interaction.member.roles.cache.has(roleStaffId)) {
             interaction.reply({
                 embeds: [
@@ -64,7 +60,7 @@ exports.command = {
                 ],
                 ephemeral: true,
             });
-            (0, sentry_1.sentry)(interaction.client, 'DiscordGuard/Confirm', icon_1.xMark + ' Permission manquante (\`STAFF\`)', interaction.user, `/confirm user:${userSelect.id.toString()} role:${roleSelect.value.toString()}`);
+            (0, sentry_1.sentry)(interaction.client, 'DiscordGuard/Confirm', icon_1.xMark + ' Permission manquante (\`STAFF\`)', user, `/confirm user:${userSelect.id.toString()} role:${roleSelect.value.toString()}`);
             return;
         }
         userSelect.roles.add(roleSelect.value.toString());
@@ -75,9 +71,9 @@ exports.command = {
         }
         interaction.reply({
             embeds: [
-                (0, embedBuilder_1.default)(`Confirmation d'utilisateur`, `L'utilisateur \`${userSelect.id.toString()}\` à était confirmer avec le rôle \`${roleSelect.role.name}\``, discord_js_1.Colors.Green)
+                (0, embedBuilder_1.default)(`Confirmation d'utilisateur`, `L'utilisateur ${userSelect.toString()} à était confirmer avec le rôle \`${roleSelect.role.name}\``, discord_js_1.Colors.Green)
             ]
         });
-        (0, sentry_1.sentry)(interaction.client, `DiscordGuard/Confirm`, icon_1.whiteCheckMark + ` Confirmation d'utilisateur (\`${userSelect.displayName.toString()}\` | \`${roleSelect.role.name}\`)`, interaction.user, command);
+        (0, sentry_1.sentry)(interaction.client, `DiscordGuard/Confirm`, icon_1.whiteCheckMark + ` Confirmation d'utilisateur (\`${userSelect.id.toString()}\` | \`${roleSelect.role.name}\`)`, user, command);
     }
 };

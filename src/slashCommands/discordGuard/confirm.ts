@@ -68,7 +68,7 @@ export const command: SlashCommand = {
             embeds: [
                 coloredEmbed(
                     `Confirmation d'utilisateur`,
-                    `L'utilisateur \`${userSelect.id.toString()}\` à était confirmer avec le rôle \`${roleSelect.role.name}\``,
+                    `L'utilisateur ${userSelect.toString()} à était confirmer avec le rôle \`${roleSelect.role.name}\``,
                     Colors.Green,
                 )
             ]
@@ -77,7 +77,7 @@ export const command: SlashCommand = {
         sentry(
             interaction.client,
             `DiscordGuard/Confirm`,
-            whiteCheckMark + ` Confirmation d'utilisateur (\`${userSelect.displayName.toString()}\` | \`${roleSelect.role.name}\`)`,
+            whiteCheckMark + ` Confirmation d'utilisateur (\`${userSelect.id.toString()}\` | \`${roleSelect.role.name}\`)`,
             user,
             command,
         )
