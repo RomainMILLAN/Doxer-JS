@@ -25,11 +25,11 @@ export function errorBuilder(title: string = null, description: string = null) {
     );
 }
 
-export function coloredEmbed(title: string = null, description: string = null, color: string = null) {
+export function coloredEmbed(title: string = null, description: string = null, color = null) {
     var embed = new EmbedBuilder()
         .setTitle(title)
         .setDescription(description)
-        .setColor(color as ColorResolvable);
+        .setColor(color);
 
     return embed;
 }

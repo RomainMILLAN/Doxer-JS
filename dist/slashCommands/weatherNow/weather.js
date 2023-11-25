@@ -1,12 +1,10 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.command = void 0;
 const discord_js_1 = require("discord.js");
-const sentry_1 = __importDefault(require("../../manager/sentry"));
+const sentry_1 = require("../../manager/sentry");
 const embedBuilder_1 = require("../../manager/embedBuilder");
+const timeManager_1 = require("../../manager/timeManager");
 exports.command = {
     name: "weather",
     data: new discord_js_1.SlashCommandBuilder()
@@ -29,7 +27,7 @@ exports.command = {
                 ],
                 ephemeral: true,
             });
-            (0, sentry_1.default)(interaction.client, 'Weather/Weather', 'La clé d\'API OpenWeatherMap n\'est pas définie', interaction.user, `/weather city:${city}`);
+            (0, sentry_1.sentry)(interaction.client, 'Weather/Weather', 'La clé d\'API OpenWeatherMap n\'est pas définie', interaction.user, `/weather city:${city}`);
         }
         const openWeatherMapApiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=celsus&appid=${process.env.OPEN_WEATHER_API}&lang=fr`;
         let response;
@@ -55,7 +53,7 @@ exports.command = {
                             },
                             {
                                 name: '**Ephéméride**',
-                                value: `🌖 ${getFormattedTime(data.sys.sunrise)}\n🌒 ${getFormattedTime(data.sys.sunset)}`,
+                                value: `🌖 ${(0, timeManager_1.getFormattedTime)(data.sys.sunrise)}\n🌒 ${(0, timeManager_1.getFormattedTime)(data.sys.sunset)}`,
                                 inline: true,
                             },
                         ])
@@ -65,8 +63,3 @@ exports.command = {
         });
     }
 };
-function getFormattedTime(timestamp, locale = 'fr-FR') {
-    const date = new Date(timestamp);
-    const options = { hour: 'numeric', minute: 'numeric' };
-    return new Intl.DateTimeFormat(locale, options).format(date);
-}
