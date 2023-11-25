@@ -19,11 +19,21 @@ install:	## Install dependencies
 ##---------------------------------------------------------------------------
 ## Docker
 ##
-up:	## Run bot at development mode
+start:	## Run bot at development mode
 	$(DC) up -d --build
 
-up-prod:	## Run bot at production mode
+start-prod:	## Run bot at production mode
 	$(DC) -f docker-compose.yml -f docker-compose.prod.yml up --build
+
+start-dev: ## Run bot at development mode
+	$(NPM) run start
 
 stop:	## Stop bot
 	$(DC) down
+
+restart:	## Restart bot
+restart: stop start
+
+rebuild-dev: ## Build and run bot at development mode
+	npx tsc
+	$(NPM) run start

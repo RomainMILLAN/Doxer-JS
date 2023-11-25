@@ -9,7 +9,7 @@ const event: BotEvent = {
     once: true,
     execute(client: Client) {
         sendUptime()
-        sendDebug(`Client ready '\x1b[1m${client.user.tag}\x1b[0m'`)
+        sendInfo(`Client ready '\x1b[1m${client.user.tag}\x1b[0m'`)
     }
 }
 

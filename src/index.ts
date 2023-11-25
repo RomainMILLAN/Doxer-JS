@@ -1,4 +1,4 @@
-import { ActivityType, Channel, Client, Collection, GatewayIntentBits, TextChannel } from "discord.js";
+import { ActivityType, Client, Collection, GatewayIntentBits } from "discord.js";
 import * as dotenv from "dotenv";
 import { readdirSync } from "fs";
 import { join } from "path";

@@ -11,7 +11,7 @@ const event = {
     once: true,
     execute(client) {
         (0, uptime_1.default)();
-        (0, consoleManager_1.sendDebug)(`Client ready '\x1b[1m${client.user.tag}\x1b[0m'`);
+        (0, consoleManager_1.sendInfo)(`Client ready '\x1b[1m${client.user.tag}\x1b[0m'`);
     }
 };
 exports.default = event;
