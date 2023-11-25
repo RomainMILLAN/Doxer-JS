@@ -1,4 +1,4 @@
-import { Client, EmbedBuilder, GuildMember, TextChannel, User } from "discord.js";
+import { Channel, Client, EmbedBuilder, GuildMember, TextChannel, User } from "discord.js";
 
 export function sentry(client: Client, title: string, description: string, user: User, command: string|null = null) {
     client.guilds.fetch(process.env.GUILD_ID).then(r => {
@@ -18,6 +18,35 @@ export function sentry(client: Client, title: string, description: string, user:
                     })
             }
 
+            c.send({
+                embeds: [
+                    embed,
+                ]
+            });
+        })
+    })
+}
+
+export function discordSentry(client: Client, channel: Channel, description: string, user: User) {
+    client.guilds.fetch(process.env.GUILD_ID).then(r => {
+        r.channels.fetch(process.env.TC_DISCORD_SENTRY).then((c: TextChannel) => {
+            const date = new Date();
+            let day = date.getDate();
+            let month = date.getMonth() + 1;
+            let year = date.getFullYear();
+            let hour = date.getHours();
+            let min = date.getMinutes();
+
+            var embed = new EmbedBuilder()
+                        .setTitle(`📝 DISCORD SENTRY/Message`)
+                        .setDescription(
+                            `Message - ${user.toString()}\n > ${channel.toString()}\n > ${description}`
+                        )
+                        .setColor("White")
+                        .setFooter({
+                            text: `Le ${day}/${month}/${year} à ${hour}:${min}` 
+                        });
+            
             c.send({
                 embeds: [
                     embed,

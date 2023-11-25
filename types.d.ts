@@ -9,6 +9,7 @@ declare global {
             R_OP: string,
             R_STAFF: string,
             TC_SENTRY: string,
+            TC_DISCORD_SENTRY: string,
             VC_CATEGORY: string,
             OPEN_WEATHER_API: string,
             WEATHER_DEFAULT_CITY: string,

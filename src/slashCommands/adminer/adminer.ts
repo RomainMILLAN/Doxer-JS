@@ -73,6 +73,7 @@ export const command: SlashCommand = {
       embeds: [
         embed,
       ],
+      ephemeral: true,
     });
     
     sentry(
