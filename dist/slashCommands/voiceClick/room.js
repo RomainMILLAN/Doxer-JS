@@ -12,7 +12,7 @@ exports.command = {
     name: "room",
     data: new discord_js_1.SlashCommandBuilder()
         .setName("room")
-        .setDescription("Crée une salle audio")
+        .setDescription("Crée une salle audio (NE PAS UTILISER, TOUS LES USERS PEUVENT LES VOIR / REJOINDRE)")
         .setDMPermission(false),
     execute: async (interaction) => {
         interaction.guild.channels.create({
@@ -28,7 +28,7 @@ exports.command = {
                         discord_js_1.PermissionsBitField.Flags.ManageChannels,
                         discord_js_1.PermissionsBitField.Flags.Connect,
                     ],
-                }
+                },
             ]
         })
             .then((channel) => {

@@ -10,6 +10,8 @@ declare global {
             R_STAFF: string,
             TC_SENTRY: string,
             VC_CATEGORY: string,
+            OPEN_WEATHER_API: string,
+            WEATHER_DEFAULT_CITY: string,
             APP_ENV: string,
             APP_DEBUGING: string,
             DISCORD_WEBHOOK_URL: string,
