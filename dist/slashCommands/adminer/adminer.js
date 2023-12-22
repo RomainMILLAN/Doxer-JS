@@ -17,14 +17,13 @@ exports.command = {
         .setDMPermission(false),
     execute: async (interaction) => {
         const roleOpId = process.env.R_OP;
-        if (false == interaction.member.roles.cache.has(roleOpId)) {
+        if (false ==
+            interaction.member.roles.cache.has(roleOpId)) {
             interaction.reply({
-                embeds: [
-                    (0, embedBuilder_1.permErrorBuilder)('OP')
-                ],
+                embeds: [(0, embedBuilder_1.permErrorBuilder)("OP")],
                 ephemeral: true,
             });
-            (0, sentry_1.default)(interaction.client, 'Adminer', icon_1.xMark + ' Permission manquante', interaction.user, `/adminer`);
+            (0, sentry_1.default)(interaction.client, "Adminer", icon_1.xMark + " Permission manquante", interaction.user, `/adminer`);
             return;
         }
         var embed = new discord_js_1.EmbedBuilder()
@@ -33,13 +32,12 @@ exports.command = {
             .addFields({
             name: "🔗 Code",
             value: "[Lien vers Github](https://github.com/RomainMILLAN/Doxer-JS)",
-        }, {
-            name: "🧾 Ticket",
-            value: "Pour toute demande de support, merci de créer un ticket [ici](https://romainmillan.fr/ticket)",
         });
-        if ('' != process.env.RM_CLIENT_ID && '' != process.env.RM_PROJECT_ID) {
-            embed
-                .addFields({
+        if ("" != process.env.RM_CLIENT_ID && "" != process.env.RM_PROJECT_ID) {
+            embed.addFields({
+                name: "🧾 Ticket",
+                value: "Pour toute demande de support, merci de créer un ticket [ici](https://romainmillan.fr/ticket)",
+            }, {
                 name: "🆔 Identifiant",
                 value: `${process.env.RM_CLIENT_ID}`,
             }, {
@@ -48,11 +46,9 @@ exports.command = {
             });
         }
         interaction.reply({
-            embeds: [
-                embed,
-            ],
+            embeds: [embed],
             ephemeral: true,
         });
-        (0, sentry_1.default)(interaction.client, 'Adminer', icon_1.whiteCheckMark + ' Visualisation des données administrateurs', interaction.user, `/admin`);
+        (0, sentry_1.default)(interaction.client, "Adminer", icon_1.whiteCheckMark + " Visualisation des données administrateurs", interaction.user, `/admin`);
     },
 };

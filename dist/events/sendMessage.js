@@ -9,12 +9,15 @@ const event = {
         if (message.author.bot) {
             return;
         }
-        if (null == process.env.TC_DISCORD_SENTRY || '' == process.env.TC_DISCORD_SENTRY) {
+        if (null == process.env.TC_DISCORD_SENTRY ||
+            "" == process.env.TC_DISCORD_SENTRY) {
             return;
         }
-        (0, consoleManager_1.sendLog)(message.author.globalName
-            + ' | ' + message.content);
+        if (null == process.env.APP_SENTRY || "FALSE" == process.env.APP_SENTRY) {
+            return;
+        }
+        (0, consoleManager_1.sendLog)(message.author.globalName + " | " + message.content);
         (0, sentry_1.discordSentry)(message.client, message.channel, message.content, message.member.user);
-    }
+    },
 };
 exports.default = event;

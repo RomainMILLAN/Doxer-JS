@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.sendUptime = void 0;
 async function sendUptime() {
-    if (process.env.APP_ENV !== 'PROD')
+    if (process.env.APP_ENV !== "PROD")
         return;
     const discordWebhookUrl = process.env.DISCORD_WEBHOOK_URL;
     if (discordWebhookUrl === "")
@@ -15,22 +15,22 @@ async function sendUptime() {
                 fields: [
                     {
                         name: "Service name",
-                        value: "Doxer JS"
+                        value: "Doxer JS",
                     },
                     {
                         name: "State",
-                        value: "Bot connecté ✅"
-                    }
-                ]
-            }
-        ]
+                        value: "Bot connecté ✅",
+                    },
+                ],
+            },
+        ],
     };
     await fetch(discordWebhookUrl, {
-        method: 'POST',
+        method: "POST",
         body: JSON.stringify(body),
         headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
+            "Content-Type": "application/json",
+            Accept: "application/json",
         },
     });
 }

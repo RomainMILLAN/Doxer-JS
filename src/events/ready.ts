@@ -5,12 +5,14 @@ import sendUptime from "../manager/uptime";
 import { sendInfo, sendDebug } from "../manager/consoleManager";
 
 const event: BotEvent = {
-    name: Events.ClientReady,
-    once: true,
-    execute(client: Client) {
-        sendUptime()
-        sendInfo(`Client ready '\x1b[1m${client.user.tag}\x1b[0m'`)
-    }
-}
+  name: Events.ClientReady,
+  once: true,
+  execute(client: Client) {
+    sendUptime();
+    sendInfo(
+      `Client ready '\x1b[1m${client.user.tag}\x1b[0m' in mode \x1b[1m${process.env.APP_ENV}\x1b[0m`
+    );
+  },
+};
 
 export default event;
