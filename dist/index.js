@@ -27,7 +27,15 @@ const discord_js_1 = require("discord.js");
 const dotenv = __importStar(require("dotenv"));
 const fs_1 = require("fs");
 const path_1 = require("path");
+const process_1 = require("process");
+const consoleManager_1 = require("./manager/consoleManager");
 dotenv.config();
+if (process.env.APP_ENV != "PROD" &&
+    process.env.APP_ENV != "STAGING" &&
+    process.env.APP_ENV != "DEV") {
+    (0, consoleManager_1.sendError)("Invalid APP_ENV value. Please set APP_ENV to PROD, STAGING or DEV.");
+    (0, process_1.kill)(process.pid, "SIGTERM");
+}
 const client = new discord_js_1.Client({
     intents: [
         discord_js_1.GatewayIntentBits.Guilds,
@@ -36,16 +44,18 @@ const client = new discord_js_1.Client({
         discord_js_1.GatewayIntentBits.GuildMembers,
     ],
     presence: {
-        status: 'online',
-        activities: [{
-                name: '/info',
-                type: discord_js_1.ActivityType.Watching
-            }]
-    }
+        status: "online",
+        activities: [
+            {
+                name: "/info",
+                type: discord_js_1.ActivityType.Watching,
+            },
+        ],
+    },
 });
 client.slashCommands = new discord_js_1.Collection();
 const handlersDirs = (0, path_1.join)(__dirname, "./handlers");
-(0, fs_1.readdirSync)(handlersDirs).forEach(file => {
+(0, fs_1.readdirSync)(handlersDirs).forEach((file) => {
     require(`${handlersDirs}/${file}`)(client);
 });
 client.login(process.env.BOT_TOKEN);
