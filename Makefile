@@ -1,3 +1,4 @@
+.DEFAULT_GLOBAL = help
 NPM = npm
 DOCKER = docker
 DC = $(DOCKER) compose
@@ -17,23 +18,28 @@ install:	## Install dependencies
 
 
 ##---------------------------------------------------------------------------
-## Docker
+## Typescript
 ##
-start:	## Run bot at development mode
-	$(DC) up -d --build
-
-start-prod:	## Run bot at production mode
-	$(DC) -f docker-compose.yml -f docker-compose.prod.yml up --build
+build:	## Build typescript
+build:
+	npx tsc
 
 start-dev: ## Run bot at development mode
+start-dev: build
 	$(NPM) run start
 
-stop:	## Stop bot
-	$(DC) down
+rebuild-dev: ## Build and run bot at development mode
+rebuild-dev: build
+	$(NPM) run start
 
+##---------------------------------------------------------------------------
+## Docker
+##
 restart:	## Restart bot
 restart: stop start
 
-rebuild-dev: ## Build and run bot at development mode
-	npx tsc
-	$(NPM) run start
+start:	## Run bot at production mode
+	$(DC) -f docker-compose.yml up --build
+
+stop:	## Stop bot
+	$(DC) down
