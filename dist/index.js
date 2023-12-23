@@ -30,10 +30,12 @@ const path_1 = require("path");
 const process_1 = require("process");
 const consoleManager_1 = require("./manager/consoleManager");
 dotenv.config();
-const result = require("dotenv").config({
-    path: ".env." + process.env.NODE_ENV,
-});
-process.env = Object.assign(Object.assign({}, process.env), result.parsed);
+if (process.env.NODE_ENV != undefined) {
+    const result = require("dotenv").config({
+        path: ".env." + process.env.NODE_ENV,
+    });
+    process.env = Object.assign(Object.assign({}, process.env), result.parsed);
+}
 console.log(process.env.APP_ENV);
 if (process.env.APP_ENV != "PROD" &&
     process.env.APP_ENV != "STAGING" &&

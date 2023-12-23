@@ -13,14 +13,16 @@ import { sendError } from "./manager/consoleManager";
 
 dotenv.config();
 
-const result = require("dotenv").config({
-  path: ".env." + process.env.NODE_ENV,
-});
+if (process.env.NODE_ENV != undefined) {
+  const result = require("dotenv").config({
+    path: ".env." + process.env.NODE_ENV,
+  });
 
-process.env = {
-  ...process.env,
-  ...result.parsed,
-};
+  process.env = {
+    ...process.env,
+    ...result.parsed,
+  };
+}
 
 console.log(process.env.APP_ENV);
 

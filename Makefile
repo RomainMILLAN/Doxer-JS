@@ -22,15 +22,15 @@ install:	## Install dependencies
 ##
 build:	## Build typescript
 build:
-	npx tsc
+	@npx tsc
 
 start-dev: ## Run bot at development mode
 start-dev: build
-	$(NPM) run start
+	@$(NPM) run start
 
 rebuild-dev: ## Build and run bot at development mode
 rebuild-dev: build
-	$(NPM) run start
+	@$(NPM) run start
 
 ##---------------------------------------------------------------------------
 ## Docker
@@ -39,7 +39,7 @@ restart:	## Restart bot
 restart: stop start
 
 start:	## Run bot at production mode
-	$(DC) -f docker-compose.yml up --build
+	@$(DC) -f docker-compose.yml up --build
 
 stop:	## Stop bot
-	$(DC) down
+	@$(DC) down
