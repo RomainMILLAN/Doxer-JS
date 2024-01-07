@@ -73,9 +73,9 @@ export const command: SlashCommand = {
         sentry(
             interaction.client,
             'DiscordProfiler/Avatar',
-            whiteCheckMark + ` Visualisation de l'avatar de ${user.displayName}`,
+            whiteCheckMark + ` Visualisation du profil de ${user.displayName}`,
             interaction.user,
-            `/avatar user:${user.globalName}`,
+            `/profil user:${user.globalName}`,
         )
     }
 }
