@@ -2,6 +2,10 @@ version: '3.7'
 
 services:
   ts-node-docker:
+    container_name: doxerjs-prod
     build:
       target: production
+    environment:
+      - NODE_ENV=prod
+      - APP_ENV=PROD
     command: npm run start

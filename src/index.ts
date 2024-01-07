@@ -9,7 +9,8 @@ import { readdirSync } from "fs";
 import { join } from "path";
 import { SlashCommand } from "../types";
 import { kill } from "process";
-import { sendError } from "./manager/consoleManager";
+import sendInfo, { sendError, sendDebug } from "./manager/consoleManager";
+import { discordSentryBlacklistInitialize } from "./manager/discordSentryWordsBlacklist";
 
 dotenv.config();
 
@@ -24,7 +25,7 @@ if (process.env.NODE_ENV != undefined) {
   };
 }
 
-console.log(process.env.APP_ENV);
+sendDebug("Starting in " + process.env.APP_ENV + " mode.");
 
 if (
   process.env.APP_ENV != "PROD" &&
@@ -62,5 +63,7 @@ const handlersDirs = join(__dirname, "./handlers");
 readdirSync(handlersDirs).forEach((file) => {
   require(`${handlersDirs}/${file}`)(client);
 });
+
+discordSentryBlacklistInitialize();
 
 client.login(process.env.BOT_TOKEN);

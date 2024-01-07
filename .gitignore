@@ -1,4 +1,7 @@
 .vscode/
+dist/
 node_modules/
 .env
-.env.*
+.env.dev
+.env.staging
+.env.prod

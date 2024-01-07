@@ -2,6 +2,7 @@ version: '3.7'
 
 services:
   ts-node-docker:
+    container_name: doxerjs
     build:
       context: .
       dockerfile: Dockerfile
@@ -9,7 +10,6 @@ services:
     volumes:
       - ./src:/home/node/app/src
       - ./node_modules.json:/home/node/app/nodemon.json
-    container_name: discord-js
     environment:
         - TZ=Europe/Paris
     command: npm run start

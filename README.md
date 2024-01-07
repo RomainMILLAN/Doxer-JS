@@ -47,6 +47,11 @@ La variable d'environnement `OPEN_WEATHER_API` est la clef API pour faire appell
 
 La variable d'environnement `WEATHER_DEFAULT_CITY` est la ville par défaut appeller pour la commande `/weather`.
 
+### Liste des mots non logger
+
+La variable d'environnement `DISCORD_SENTRY_BLACKLIST` sert à spécifier les messages qui ne seront pas enregistrés par DiscordSentry. Pour l'utiliser, il suffit de lister tous les mots en minuscules, séparés par des virgules, comme suit : <br/>`DISCORD_SENTRY_BLACKLIST="hello,world,how"` => ainsi, les messages contenant exactement les mots `hello`, `world` et `how` seront ignorés par Discord Sentry.
+
+
 <br>
 
 ### Environnement
