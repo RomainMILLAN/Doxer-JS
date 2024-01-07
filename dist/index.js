@@ -36,7 +36,7 @@ if (process.env.NODE_ENV != undefined) {
     });
     process.env = Object.assign(Object.assign({}, process.env), result.parsed);
 }
-console.log(process.env.APP_ENV);
+(0, consoleManager_1.sendDebug)("Starting in " + process.env.APP_ENV + " mode.");
 if (process.env.APP_ENV != "PROD" &&
     process.env.APP_ENV != "STAGING" &&
     process.env.APP_ENV != "DEV") {
