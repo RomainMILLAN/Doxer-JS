@@ -29,6 +29,7 @@ const fs_1 = require("fs");
 const path_1 = require("path");
 const process_1 = require("process");
 const consoleManager_1 = require("./manager/consoleManager");
+const discordSentryWordsBlacklist_1 = require("./manager/discordSentryWordsBlacklist");
 dotenv.config();
 if (process.env.NODE_ENV != undefined) {
     const result = require("dotenv").config({
@@ -65,4 +66,5 @@ const handlersDirs = (0, path_1.join)(__dirname, "./handlers");
 (0, fs_1.readdirSync)(handlersDirs).forEach((file) => {
     require(`${handlersDirs}/${file}`)(client);
 });
+(0, discordSentryWordsBlacklist_1.discordSentryBlacklistInitialize)();
 client.login(process.env.BOT_TOKEN);

@@ -2,6 +2,7 @@ import { Events, Message } from "discord.js";
 import { BotEvent } from "../../types";
 import { sendLog } from "../manager/consoleManager";
 import { discordSentry } from "../manager/sentry";
+import { isDiscordSentryBlacklisted } from "../manager/discordSentryWordsBlacklist";
 
 const event: BotEvent = {
   name: Events.MessageCreate,
@@ -18,6 +19,10 @@ const event: BotEvent = {
     }
 
     if (null == process.env.APP_SENTRY || "FALSE" == process.env.APP_SENTRY) {
+      return;
+    }
+
+    if(isDiscordSentryBlacklisted(message.content.toLocaleLowerCase())) {
       return;
     }
 
