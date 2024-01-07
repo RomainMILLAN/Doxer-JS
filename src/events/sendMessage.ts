@@ -21,7 +21,6 @@ const event: BotEvent = {
       return;
     }
 
-    sendLog(message.author.globalName + " | " + message.content);
     discordSentry(
       message.client,
       message.channel,

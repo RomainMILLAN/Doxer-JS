@@ -3,3 +3,6 @@ version: '3.7'
 services:
   ts-node-docker:
     container_name: doxerjs-dev
+    build:
+      target: base
+    command: npm run start

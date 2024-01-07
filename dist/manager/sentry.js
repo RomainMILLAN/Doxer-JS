@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.discordSentry = exports.sentry = void 0;
 const discord_js_1 = require("discord.js");
+const consoleManager_1 = require("./consoleManager");
 function sentry(client, title, description, user, command = null) {
     client.guilds.fetch(process.env.GUILD_ID).then(r => {
         r.channels.fetch(process.env.TC_SENTRY).then((c) => {
@@ -21,6 +22,7 @@ function sentry(client, title, description, user, command = null) {
                     embed,
                 ]
             });
+            (0, consoleManager_1.sendLog)(user.globalName + " | " + title + "/" + description);
         });
     });
 }
@@ -46,6 +48,7 @@ function discordSentry(client, channel, description, user) {
                     embed,
                 ]
             });
+            (0, consoleManager_1.sendLog)(user.globalName + " | " + description);
         });
     });
 }

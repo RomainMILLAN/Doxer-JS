@@ -1,4 +1,5 @@
 import { Channel, Client, EmbedBuilder, GuildMember, TextChannel, User } from "discord.js";
+import { sendLog } from "./consoleManager";
 
 export function sentry(client: Client, title: string, description: string, user: User, command: string|null = null) {
     client.guilds.fetch(process.env.GUILD_ID).then(r => {
@@ -23,6 +24,7 @@ export function sentry(client: Client, title: string, description: string, user:
                     embed,
                 ]
             });
+            sendLog(user.globalName + " | " + title + "/" + description);
         })
     })
 }
@@ -52,6 +54,7 @@ export function discordSentry(client: Client, channel: Channel, description: str
                     embed,
                 ]
             });
+            sendLog(user.globalName + " | " + description);
         })
     })
 }
