@@ -76,12 +76,6 @@ Plusieurs valeurs possible: `FALSE` ou `TRUE`
 `DISCORD_WEBHOOK_URL` désigne l'url de la webhook de monitoring.
 
 <br>
-
-### Client & Projet ID
-
-`RM_CLIENT_ID` & `RM_PROJECT_ID` Si vous ne savez pas à quoi cela sert, merci de ne pas les renseigner.
-
-<br>
 <br>
 <br>
 

@@ -23,8 +23,6 @@ declare global {
       APP_DEBUGING: string;
       APP_SENTRY: string;
       DISCORD_WEBHOOK_URL: string;
-      RM_CLIENT_ID: string;
-      RM_PROJECT_ID: string;
     }
   }
 }
