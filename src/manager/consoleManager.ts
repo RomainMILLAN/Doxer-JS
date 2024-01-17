@@ -1,4 +1,3 @@
-import { time } from "console";
 const date = new Date();
 
 function prefixMessage() {

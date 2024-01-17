@@ -1,6 +1,3 @@
-import { sendConsole, sendDebug } from "./consoleManager";
-import sentry from "./sentry";
-
 export async function sendUptime() {
   if (process.env.APP_ENV !== "PROD") return;
 
@@ -25,6 +22,7 @@ export async function sendUptime() {
       },
     ],
   };
+
   await fetch(discordWebhookUrl, {
     method: "POST",
     body: JSON.stringify(body),

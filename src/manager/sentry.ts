@@ -1,5 +1,9 @@
 import { Channel, Client, EmbedBuilder, TextChannel, User } from "discord.js";
 import { sendDiscordSentryLog, sendLog } from "./consoleManager";
+import {
+  getCurrentFormattedDateString,
+  getCurrentFormattedTimeString,
+} from "./timeManager";
 
 export function sentry(
   client: Client,
@@ -13,7 +17,10 @@ export function sentry(
       var embed = new EmbedBuilder()
         .setTitle(`📝 SENTRY/${title}`)
         .setDescription(`${title} - ${user.toString()}\n > ${description}`)
-        .setColor("Orange");
+        .setColor("Orange")
+        .setFooter({
+          text: `Le ${getCurrentFormattedDateString()} à ${getCurrentFormattedTimeString()}`,
+        });
 
       if (null !== command) {
         embed.addFields({
@@ -38,13 +45,6 @@ export function discordSentry(
 ) {
   client.guilds.fetch(process.env.GUILD_ID).then((r) => {
     r.channels.fetch(process.env.TC_DISCORD_SENTRY).then((c: TextChannel) => {
-      const date = new Date();
-      let day = date.getDate();
-      let month = date.getMonth() + 1;
-      let year = date.getFullYear();
-      let hour = date.getHours();
-      let min = date.getMinutes();
-
       var embed = new EmbedBuilder()
         .setTitle(`📝 DISCORD SENTRY/Message`)
         .setDescription(
@@ -52,7 +52,7 @@ export function discordSentry(
         )
         .setColor("White")
         .setFooter({
-          text: `Le ${day}/${month}/${year} à ${hour}:${min}`,
+          text: `Le ${getCurrentFormattedDateString} à ${getCurrentFormattedTimeString}`,
         });
 
       c.send({
