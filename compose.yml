@@ -12,4 +12,5 @@ services:
       - ./node_modules.json:/home/node/app/nodemon.json
     environment:
         - TZ=Europe/Paris
+        - NODE_ENV=dev
     command: npm run start
