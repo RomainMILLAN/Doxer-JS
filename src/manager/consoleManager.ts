@@ -94,4 +94,20 @@ export function sendLog(body: string) {
   );
 }
 
+export function sendDiscordSentryLog(body: string) {
+  console.log(
+    prefixMessage() +
+      " " +
+      "\x1b[1m[" +
+      date.getDay() +
+      "/" +
+      (date.getMonth() + 1) +
+      "/" +
+      date.getFullYear() +
+      "]\x1b[0m " +
+      "\x1b[43mDISCORD SENTRY LOG\x1b[0m " +
+      body
+  );
+}
+
 export default sendInfo;

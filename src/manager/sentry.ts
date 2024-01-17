@@ -1,5 +1,5 @@
 import { Channel, Client, EmbedBuilder, GuildMember, TextChannel, User } from "discord.js";
-import { sendLog } from "./consoleManager";
+import { sendDiscordSentryLog, sendLog } from "./consoleManager";
 
 export function sentry(client: Client, title: string, description: string, user: User, command: string|null = null) {
     client.guilds.fetch(process.env.GUILD_ID).then(r => {
@@ -54,7 +54,7 @@ export function discordSentry(client: Client, channel: Channel, description: str
                     embed,
                 ]
             });
-            sendLog(user.globalName + " | " + description);
+            sendDiscordSentryLog(user.globalName + " | " + description);
         })
     })
 }
