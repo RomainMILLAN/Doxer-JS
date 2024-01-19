@@ -1,6 +1,8 @@
-import { SlashCommandBuilder, Colors, EmbedBuilder } from "discord.js";
+import { SlashCommandBuilder, Colors, EmbedBuilder, TextChannel } from "discord.js";
 import { SlashCommand } from "../../../types";
 import sentry from "../../manager/sentry";
+import { sendDebug } from "../../manager/consoleManager";
+import coloredEmbed from "../../manager/embedBuilder";
 
 export const command: SlashCommand = {
     name: "poll",
@@ -13,21 +15,49 @@ export const command: SlashCommand = {
                 .setName('question')
                 .setDescription('La question du sondage')
                 .setRequired(true)
-        ),
+        )
+        .addStringOption(option => 
+            option
+                .setName('choix')
+                .setDescription('Les choix du sondage (Exemple: `:x:, :white_check_mark:`)')
+                .setRequired(false)
+            ),
     execute: async (interaction) => {
         const question = interaction.options.get('question').value;
+        let choicesText = '✅, ❌';
+        
+        if (interaction.options.get('choix') !== null) {
+            choicesText = String(interaction.options.get('choix').value);
+        }
+
+        let choices = choicesText.split(', ');
+
+        let footerText = 'Plusieurs choix sont possibles pour ce sondage: ';
+        choices.forEach(element => {
+            footerText += element + ' ';
+        });
 
         interaction.reply({
             embeds: [
+                coloredEmbed('Sondage ❓', `Votre sondage à était crée.`, Colors.Green)
+            ]
+        })
+
+        const currentTextChannel = interaction.channel as TextChannel;
+        currentTextChannel.send({
+            embeds: [
                 new EmbedBuilder()
-                    .setTitle(`Sondage :question:`)
+                    .setTitle(`Sondage de ${interaction.user.displayName} ❓`)
+                    .setThumbnail(interaction.user.avatarURL())
                     .setDescription(`${question}`)
+                    .setFooter({ text: footerText })
                     .setColor(Colors.Blue)
             ],
-            fetchReply: true,
-        }).then((message) => {
-            message.react("✅");
-            message.react("❌");
+        })
+        .then((message) => {
+            choices.forEach(element => {
+                message.react(element);
+            });
         })
 
         sentry(
@@ -35,7 +65,7 @@ export const command: SlashCommand = {
             'PollExclamer/Poll',
             `Création d'un sondage (\`${question}\`)`,
             interaction.user,
-            `/poll question:${question}`,
+            `/poll question:${question} choices:${choicesText}`,
         )
     }
 }

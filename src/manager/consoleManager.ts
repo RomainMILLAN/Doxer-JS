@@ -1,4 +1,3 @@
-import { time } from "console";
 const date = new Date();
 
 function prefixMessage() {
@@ -90,6 +89,22 @@ export function sendLog(body: string) {
       date.getFullYear() +
       "]\x1b[0m " +
       "\x1b[43mLOG\x1b[0m " +
+      body
+  );
+}
+
+export function sendDiscordSentryLog(body: string) {
+  console.log(
+    prefixMessage() +
+      " " +
+      "\x1b[1m[" +
+      date.getDay() +
+      "/" +
+      (date.getMonth() + 1) +
+      "/" +
+      date.getFullYear() +
+      "]\x1b[0m " +
+      "\x1b[43mDISCORD SENTRY LOG\x1b[0m " +
       body
   );
 }

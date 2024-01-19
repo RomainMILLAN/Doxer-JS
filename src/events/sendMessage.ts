@@ -1,6 +1,5 @@
 import { Events, Message } from "discord.js";
 import { BotEvent } from "../../types";
-import { sendLog } from "../manager/consoleManager";
 import { discordSentry } from "../manager/sentry";
 import { isDiscordSentryBlacklisted } from "../manager/discordSentryWordsBlacklist";
 
@@ -22,7 +21,7 @@ const event: BotEvent = {
       return;
     }
 
-    if(isDiscordSentryBlacklisted(message.content.toLocaleLowerCase())) {
+    if (isDiscordSentryBlacklisted(message.content.toLocaleLowerCase())) {
       return;
     }
 

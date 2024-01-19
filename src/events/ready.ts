@@ -1,8 +1,7 @@
 import { Client, Events } from "discord.js";
 import { BotEvent } from "../../types";
-import { uptime } from "process";
 import sendUptime from "../manager/uptime";
-import { sendInfo, sendDebug } from "../manager/consoleManager";
+import { sendInfo } from "../manager/consoleManager";
 
 const event: BotEvent = {
   name: Events.ClientReady,

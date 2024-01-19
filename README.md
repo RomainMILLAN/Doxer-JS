@@ -74,12 +74,7 @@ Plusieurs valeurs possible: `FALSE` ou `TRUE`
 ### Webhook
 
 `DISCORD_WEBHOOK_URL` désigne l'url de la webhook de monitoring.
-
-<br>
-
-### Client & Projet ID
-
-`RM_CLIENT_ID` & `RM_PROJECT_ID` Si vous ne savez pas à quoi cela sert, merci de ne pas les renseigner.
+`LINE_NOTIFY_TOKEN` désigne le token de notify pour le monitoring.
 
 <br>
 <br>

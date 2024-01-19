@@ -49,9 +49,8 @@ export const command: SlashCommand = {
 
         fetch(openWeatherMapApiUrl)
             .then((response) => {
-              response.json()
+            response.json()
                 .then((data) => {
-                  
                     interaction.reply({
                         embeds: [
                             new EmbedBuilder()
@@ -76,7 +75,6 @@ export const command: SlashCommand = {
                                 ])
                         ]
                     })
-
                 }) 
             })
     }
