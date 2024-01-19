@@ -1,12 +1,22 @@
-import { sendConsole, sendDebug } from "./consoleManager";
-import sentry from "./sentry";
+import { LineNotify } from "./notifier/LineNotify";
+import { DiscordNotify } from "./notifier/DiscordNotify";
 
 export async function sendUptime() {
   if (process.env.APP_ENV !== "PROD") return;
 
-  const discordWebhookUrl = process.env.DISCORD_WEBHOOK_URL;
-  if (discordWebhookUrl === "") return;
+  sendLineUptime();
+  sendDiscordUptime();
+}
 
+function sendLineUptime() {
+  const lineNotify = new LineNotify();
+  const body = "message=✅ DoxerJS connecté";
+
+  lineNotify.send(body);
+}
+
+async function sendDiscordUptime() {
+  const discordNotify = new DiscordNotify();
   const body = {
     embeds: [
       {
@@ -25,14 +35,8 @@ export async function sendUptime() {
       },
     ],
   };
-  await fetch(discordWebhookUrl, {
-    method: "POST",
-    body: JSON.stringify(body),
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-    },
-  });
+
+  discordNotify.send(body);
 }
 
 export default sendUptime;
