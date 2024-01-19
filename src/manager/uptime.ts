@@ -1,5 +1,6 @@
 import { LineNotify } from "./notifier/LineNotify";
 import { DiscordNotify } from "./notifier/DiscordNotify";
+import { sendDebug } from "./consoleManager";
 
 export async function sendUptime() {
   if (process.env.APP_ENV !== "PROD") return;
@@ -13,6 +14,7 @@ function sendLineUptime() {
   const body = "message=✅ DoxerJS connecté";
 
   lineNotify.send(body);
+  sendDebug("Uptime: \x1b[4mLine\x1b[0m notify send");
 }
 
 async function sendDiscordUptime() {
@@ -37,6 +39,7 @@ async function sendDiscordUptime() {
   };
 
   discordNotify.send(body);
+  sendDebug("Uptime: \x1b[4mDiscord\x1b[0m notify send");
 }
 
 export default sendUptime;
