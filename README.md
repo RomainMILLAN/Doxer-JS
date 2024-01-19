@@ -74,6 +74,7 @@ Plusieurs valeurs possible: `FALSE` ou `TRUE`
 ### Webhook
 
 `DISCORD_WEBHOOK_URL` désigne l'url de la webhook de monitoring.
+`LINE_NOTIFY_TOKEN` désigne le token de notify pour le monitoring.
 
 <br>
 <br>
