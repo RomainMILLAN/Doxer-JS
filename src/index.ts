@@ -9,7 +9,7 @@ import { readdirSync } from "fs";
 import { join } from "path";
 import { SlashCommand } from "../types";
 import { kill } from "process";
-import sendInfo, { sendError, sendDebug } from "./manager/consoleManager";
+import { sendError, sendDebug } from "./manager/consoleManager";
 import { discordSentryBlacklistInitialize } from "./manager/discordSentryWordsBlacklist";
 
 dotenv.config();
@@ -56,14 +56,13 @@ const client = new Client({
   },
 });
 
+discordSentryBlacklistInitialize();
+
 client.slashCommands = new Collection<string, SlashCommand>();
 
 const handlersDirs = join(__dirname, "./handlers");
-
 readdirSync(handlersDirs).forEach((file) => {
   require(`${handlersDirs}/${file}`)(client);
 });
-
-discordSentryBlacklistInitialize();
 
 client.login(process.env.BOT_TOKEN);
