@@ -46,10 +46,25 @@ services:
       target: base
     volumes:
       - ./src:/home/node/app/src
-      - ./node_modules.json:/home/node/app/nodemon.json
     environment:
       - TZ=Europe/Paris
-      - NODE_ENV=dev
+
+      - APP_ID=
+      - BOT_TOKEN=
+      - GUILD_ID=
+      - R_OP=
+      - R_STAFF=
+      - TC_SENTRY=
+      - TC_DISCORD_SENTRY=
+      - VC_CATEGORY=
+      - OPEN_WEATHER_API=
+      - WEATHER_DEFAULT_CITY=
+      - DISCORD_SENTRY_BLACKLIST=
+      - APP_ENV=DEV
+      - APP_DEBUGING=true
+      - APP_SENTRY=true
+      - DISCORD_WEBHOOK_URL=
+      - LINE_NOTIFY_TOKEN=
     command: npm run start
 ```
 
@@ -69,10 +84,25 @@ services:
       target: base
     volumes:
       - ./src:/home/node/app/src
-      - ./node_modules.json:/home/node/app/nodemon.json
     environment:
       - TZ=Europe/Paris
-      - NODE_ENV=staging
+
+      - APP_ID=
+      - BOT_TOKEN=
+      - GUILD_ID=
+      - R_OP=
+      - R_STAFF=
+      - TC_SENTRY=
+      - TC_DISCORD_SENTRY=
+      - VC_CATEGORY=
+      - OPEN_WEATHER_API=
+      - WEATHER_DEFAULT_CITY=
+      - DISCORD_SENTRY_BLACKLIST=
+      - APP_ENV=STAGING
+      - APP_DEBUGING=true
+      - APP_SENTRY=true
+      - DISCORD_WEBHOOK_URL=
+      - LINE_NOTIFY_TOKEN=
     command: npm run start
 ```
 
@@ -92,9 +122,24 @@ services:
       target: production
     volumes:
       - ./src:/home/node/app/src
-      - ./node_modules.json:/home/node/app/nodemon.json
     environment:
       - TZ=Europe/Paris
-      - NODE_ENV=prod
+
+      - APP_ID=
+      - BOT_TOKEN=
+      - GUILD_ID=
+      - R_OP=
+      - R_STAFF=
+      - TC_SENTRY=
+      - TC_DISCORD_SENTRY=
+      - VC_CATEGORY=
+      - OPEN_WEATHER_API=
+      - WEATHER_DEFAULT_CITY=
+      - DISCORD_SENTRY_BLACKLIST=
+      - APP_ENV=PROD
+      - APP_DEBUGING=false
+      - APP_SENTRY=true
+      - DISCORD_WEBHOOK_URL=
+      - LINE_NOTIFY_TOKEN=
     command: npm run start
 ```

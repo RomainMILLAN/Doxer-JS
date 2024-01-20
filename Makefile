@@ -19,6 +19,9 @@ dev: ## Run bot at development mode
 dev: build
 	@$(NPM) run start
 
+build-dev: ## Build and run bot at development mode
+build-dev: build dev
+
 ##
 ## —— Docker 🐳 ————————————————————————————————————————————————————————————————
 dc-stop: ## Stop bot at development mode with docker

@@ -5,7 +5,7 @@ Documentation sur la configuration du projet Doxer JS
 
 ## Fichier de configuration
 
-Pour configurer votre projet, il vous faut cloner le fichier `.env.xxx.dist` en le nommant `.env.xxx` ou `xxx` est le nom de votre environnement.
+Pour configurer votre projet, il vous suffit de rajouter les variables d'environnement dans votre fichier `compose.yml`
 
 ## Configuration
 
