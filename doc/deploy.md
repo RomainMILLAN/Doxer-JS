@@ -141,5 +141,5 @@ services:
       - APP_SENTRY=true
       - DISCORD_WEBHOOK_URL=
       - LINE_NOTIFY_TOKEN=
-    command: npm run start
+    command: node build/index.js
 ```

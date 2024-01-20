@@ -7,7 +7,7 @@ import {
 import { readdirSync } from "fs";
 import { join } from "path";
 import { SlashCommand } from "../types";
-import { discordSentryBlacklistInitialize } from "./manager/discordSentryWordsBlacklist";
+import { discordSentryBlacklistInitialize } from "./manager/discordSentryManager";
 import initConfiguration from "./manager/configurationManager";
 
 initConfiguration();

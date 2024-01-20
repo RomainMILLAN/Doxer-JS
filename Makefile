@@ -30,7 +30,7 @@ dc-stop:
 
 dc-start: ## Start bot at development mode with docker
 dc-start: 
-	@$(DC) up -d
+	@$(DC) up -d --build
 
 dc-logs: ## Show logs
 dc-logs:
