@@ -8,13 +8,14 @@ import {
 declare global {
   namespace NodeJS {
     interface ProcessEnv {
-      BOT_TOKEN: string;
       APP_ID: string;
+      BOT_TOKEN: string;
       GUILD_ID: string;
       R_OP: string;
       R_STAFF: string;
       TC_SENTRY: string;
       TC_DISCORD_SENTRY: string;
+
       VC_CATEGORY: string;
       OPEN_WEATHER_API: string;
       WEATHER_DEFAULT_CITY: string;
@@ -23,6 +24,7 @@ declare global {
       APP_DEBUGING: string;
       APP_SENTRY: string;
       DISCORD_WEBHOOK_URL: string;
+      LINE_NOTIFY_TOKEN: string;
     }
   }
 }

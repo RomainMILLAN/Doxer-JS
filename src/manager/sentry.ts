@@ -5,6 +5,19 @@ import {
   getCurrentFormattedTimeString,
 } from "./timeManager";
 
+function isSentryEnabled(): boolean {
+  if (
+    process.env.APP_SENTRY !== undefined &&
+    process.env.APP_SENTRY !== null &&
+    process.env.APP_SENTRY !== "" &&
+    process.env.APP_SENTRY.toLocaleLowerCase() === "true"
+  ) {
+    return true;
+  }
+
+  return false;
+}
+
 export function sentry(
   client: Client,
   title: string,
@@ -12,6 +25,14 @@ export function sentry(
   user: User,
   command: string | null = null
 ) {
+  if (
+    process.env.TC_SENTRY === undefined ||
+    process.env.TC_SENTRY === null ||
+    process.env.TC_SENTRY === "" ||
+    !isSentryEnabled()
+  )
+    return;
+
   client.guilds.fetch(process.env.GUILD_ID).then((r) => {
     r.channels.fetch(process.env.TC_SENTRY).then((c: TextChannel) => {
       var embed = new EmbedBuilder()
@@ -43,6 +64,14 @@ export function discordSentry(
   description: string,
   user: User
 ) {
+  if (
+    process.env.TC_DISCORD_SENTRY === undefined ||
+    process.env.TC_DISCORD_SENTRY === null ||
+    process.env.TC_DISCORD_SENTRY === "" ||
+    !isSentryEnabled()
+  )
+    return;
+
   client.guilds.fetch(process.env.GUILD_ID).then((r) => {
     r.channels.fetch(process.env.TC_DISCORD_SENTRY).then((c: TextChannel) => {
       var embed = new EmbedBuilder()
