@@ -30,3 +30,5 @@ export function isDiscordSentryBlacklisted(word: string): boolean {
 
   return blacklist.includes(word.toLocaleLowerCase());
 }
+
+export default isDiscordSentryBlacklisted;

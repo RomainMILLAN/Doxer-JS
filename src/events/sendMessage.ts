@@ -1,7 +1,7 @@
 import { Events, Message } from "discord.js";
 import { BotEvent } from "../../types";
 import { discordSentry } from "../manager/sentry";
-import { isDiscordSentryBlacklisted } from "../manager/discordSentryWordsBlacklist";
+import isDiscordSentryBlacklisted from "../manager/discordSentryWordsBlacklist";
 
 const event: BotEvent = {
   name: Events.MessageCreate,
