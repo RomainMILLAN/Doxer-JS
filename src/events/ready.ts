@@ -4,7 +4,8 @@ import sendUptime from "../manager/uptime";
 import { colors, sendInfo } from "../manager/consoleManager";
 
 const event: BotEvent = {
-  name: Events.ClientReady,
+  name: "ready",
+  type: Events.ClientReady,
   once: true,
   execute(client: Client) {
     sendUptime();

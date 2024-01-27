@@ -37,6 +37,7 @@ declare module "discord.js" {
 
 export interface BotEvent {
   name: string;
+  type: string;
   once?: boolean | false;
   execute: (...args) => void;
 }

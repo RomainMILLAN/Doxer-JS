@@ -14,9 +14,9 @@ module.exports = (client: Client) => {
     const event: BotEvent = require(`${eventsDir}/${file}`).default;
 
     if (event.once == true) {
-      client.once(event.name, (...args) => event.execute(...args));
+      client.once(event.type, (...args) => event.execute(...args));
     } else {
-      client.on(event.name, (...args) => event.execute(...args));
+      client.on(event.type, (...args) => event.execute(...args));
     }
 
     sendDebug(`Event ${colors.underscore}${event.name}${colors.reset} charged`);

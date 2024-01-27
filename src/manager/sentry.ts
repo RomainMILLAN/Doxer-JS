@@ -61,6 +61,7 @@ export function sentry(
 export function discordSentry(
   client: Client,
   channel: Channel,
+  type: string,
   description: string,
   user: User
 ) {
@@ -77,11 +78,11 @@ export function discordSentry(
       var embed = new EmbedBuilder()
         .setTitle(`📝 DISCORD SENTRY/Message`)
         .setDescription(
-          `Message - ${user.toString()}\n > ${channel.toString()}\n > ${description}`
+          `${type} - ${user.toString()}\n > ${channel.toString()}\n > ${description}`
         )
-        .setColor("White")
+        .setColor("Orange")
         .setFooter({
-          text: `Le ${getCurrentFormattedDateString} à ${getCurrentFormattedTimeString}`,
+          text: `Le ${getCurrentFormattedDateString()} à ${getCurrentFormattedTimeString()}`,
         });
 
       c.send({
