@@ -1,33 +1,24 @@
 import { isConfigure } from "./configurationManager";
 import { sendDebug } from "./consoleManager";
 
-let blacklist: string[] = [];
-
-function isDiscordSentryBlacklistEnabled() {
-  if (
-    isConfigure(process.env.DISCORD_SENTRY_BLACKLIST)
-  ) {
-    return true;
-  }
-  return false;
-}
+let channelBlacklist: string[] = [];
 
 export function discordSentryBlacklistInitialize() {
-  if (!isDiscordSentryBlacklistEnabled()) {
+  if (!isConfigure(process.env.DISCORD_SENTRY_BLACKLIST)) {
     return;
   }
 
   const blacklistInString = process.env.DISCORD_SENTRY_BLACKLIST;
-  blacklist = blacklistInString.split(",");
-  sendDebug("DiscordSentry words blacklist: " + blacklist);
+  channelBlacklist = blacklistInString.split(",");
+  sendDebug("DiscordSentry channel(s) blacklist: " + channelBlacklist);
 }
 
-export function isDiscordSentryBlacklisted(word: string): boolean {
-  if (!isDiscordSentryBlacklistEnabled()) {
+export function isDiscordSentryBlacklisted(channelId: string): boolean {
+  if (!isConfigure(process.env.DISCORD_SENTRY_BLACKLIST)) {
     return;
   }
 
-  return blacklist.includes(word.toLocaleLowerCase());
+  return channelBlacklist.includes(channelId.toLocaleLowerCase());
 }
 
 export default isDiscordSentryBlacklisted;
