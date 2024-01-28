@@ -4,12 +4,11 @@ import {
   getCurrentFormattedDateString,
   getCurrentFormattedTimeString,
 } from "./timeManager";
+import { isConfigure } from "./configurationManager";
 
 function isSentryEnabled(): boolean {
   if (
-    process.env.APP_SENTRY !== undefined &&
-    process.env.APP_SENTRY !== null &&
-    process.env.APP_SENTRY !== "" &&
+    isConfigure(process.env.APP_SENTRY) && 
     process.env.APP_SENTRY.toLocaleLowerCase() === "true"
   ) {
     return true;
@@ -26,9 +25,7 @@ export function sentry(
   command: string | null = null
 ) {
   if (
-    process.env.TC_SENTRY === undefined ||
-    process.env.TC_SENTRY === null ||
-    process.env.TC_SENTRY === "" ||
+    !isConfigure(process.env.TC_SENTRY) ||
     !isSentryEnabled()
   )
     return;
@@ -66,9 +63,7 @@ export function discordSentry(
   user: User
 ) {
   if (
-    process.env.TC_DISCORD_SENTRY === undefined ||
-    process.env.TC_DISCORD_SENTRY === null ||
-    process.env.TC_DISCORD_SENTRY === "" ||
+    !isConfigure(process.env.TC_SENTRY) ||
     !isSentryEnabled()
   )
     return;

@@ -22,12 +22,8 @@ export function initConfiguration() {
   sendDebug(`Application ${colors.underscore}sentry${colors.reset} is ${process.env.APP_SENTRY}.`);
 }
 
-export function isDiscordSentryEnabled() {
-  if (
-    isConfigure(process.env.TC_DISCORD_SENTRY) &&
-    isConfigure(process.env.APP_SENTRY) &&
-    process.env.APP_SENTRY.toLowerCase() === "true"
-  ) {
+export function isConfigureEnabled(environment: string) {
+  if(isConfigure(environment) && environment.toLowerCase() === "true") {
     return true;
   }
 

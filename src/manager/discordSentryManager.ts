@@ -1,12 +1,11 @@
+import { isConfigure } from "./configurationManager";
 import { sendDebug } from "./consoleManager";
 
 let blacklist: string[] = [];
 
 function isDiscordSentryBlacklistEnabled() {
   if (
-    process.env.DISCORD_SENTRY_BLACKLIST !== undefined &&
-    process.env.DISCORD_SENTRY_BLACKLIST !== null &&
-    process.env.DISCORD_SENTRY_BLACKLIST !== ""
+    isConfigure(process.env.DISCORD_SENTRY_BLACKLIST)
   ) {
     return true;
   }

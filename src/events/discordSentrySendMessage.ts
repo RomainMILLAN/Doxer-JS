@@ -2,13 +2,13 @@ import { Events, Message } from "discord.js";
 import { BotEvent } from "../../types";
 import { discordSentry } from "../manager/sentry";
 import isDiscordSentryBlacklisted from "../manager/discordSentryManager";
-import { isDiscordSentryEnabled } from "../manager/configurationManager";
+import { isConfigureEnabled } from "../manager/configurationManager";
 
 const event: BotEvent = {
   name: "discordSentrySendMessage",
   type: Events.MessageCreate,
   async execute(message: Message) {
-    if (!isDiscordSentryEnabled()) {
+    if (!isConfigureEnabled(process.env.APP_SENTRY)) {
       return;
     }
 

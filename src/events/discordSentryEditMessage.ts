@@ -1,14 +1,14 @@
 import { Events, Message } from "discord.js";
 import { BotEvent } from "../../types";
 import { discordSentry } from "../manager/sentry";
-import { isDiscordSentryEnabled } from "../manager/configurationManager";
+import { isConfigureEnabled } from "../manager/configurationManager";
 
 const event: BotEvent = {
   name: "discordSentryEditMessage",
   type: Events.MessageUpdate,
   async execute(oldMessage: Message, newMessage: Message) {
     console.log(oldMessage, newMessage);
-    if (!isDiscordSentryEnabled()) {
+    if (!isConfigureEnabled(process.env.APP_SENTRY)) {
       return;
     }
 
