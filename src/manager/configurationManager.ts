@@ -1,5 +1,5 @@
 import * as dotenv from "dotenv";
-import { sendDebug, sendError } from "./consoleManager";
+import { colors, sendDebug, sendError } from "./consoleManager";
 import { kill } from "process";
 
 export function initConfiguration() {
@@ -17,6 +17,9 @@ export function initConfiguration() {
     );
     kill(process.pid, "SIGTERM");
   }
+
+  sendDebug(`Application ${colors.underscore}debuging${colors.reset} is ${process.env.APP_DEBUGING}.`);
+  sendDebug(`Application ${colors.underscore}sentry${colors.reset} is ${process.env.APP_SENTRY}.`);
 }
 
 export function isDiscordSentryEnabled() {

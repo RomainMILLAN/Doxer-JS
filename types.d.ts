@@ -15,11 +15,11 @@ declare global {
       R_STAFF: string;
       TC_SENTRY: string;
       TC_DISCORD_SENTRY: string;
-
       VC_CATEGORY: string;
       OPEN_WEATHER_API: string;
       WEATHER_DEFAULT_CITY: string;
       DISCORD_SENTRY_BLACKLIST: string;
+      
       APP_ENV: string;
       APP_DEBUGING: string;
       APP_SENTRY: string;

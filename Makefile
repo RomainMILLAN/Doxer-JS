@@ -35,3 +35,7 @@ dc-start:
 dc-logs: ## Show logs
 dc-logs:
 	@$(DC) logs
+
+dc-logs-watch: ## Show logs in follow mode
+dc-logs-watch:
+	@$(DC) logs -f
