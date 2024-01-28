@@ -5,7 +5,7 @@ Documentation sur la configuration du projet Doxer JS
 
 ## Fichier de configuration
 
-Pour configurer votre projet, il vous suffit de rajouter les variables d'environnement dans votre fichier `compose.yml`
+Pour configurer votre projet, il vous suffit de rajouter les variables d'environnement dans votre fichier `compose.yml` en copiant le fichier `compose.with_env.yml.dist` ou en créant un fichier `.env` en copiant le fichier `compose.with_env_file.yml.dist` pour le fichier `compose.yml`.
 
 ## Configuration
 
@@ -80,5 +80,5 @@ Plusieurs valeurs possible: `FALSE` ou `TRUE`
 
 ### Webhook
 
-`DISCORD_WEBHOOK_URL` désigne l'url de la webhook de monitoring.
+`DISCORD_WEBHOOK_URL` désigne l'url de la webhook de monitoring.<br/>
 `LINE_NOTIFY_TOKEN` désigne le token de notify pour le monitoring.

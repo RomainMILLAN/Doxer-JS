@@ -24,14 +24,18 @@ export function initConfiguration() {
 
 export function isDiscordSentryEnabled() {
   if (
-    process.env.TC_DISCORD_SENTRY !== null &&
-    process.env.TC_DISCORD_SENTRY !== "" &&
-    process.env.TC_DISCORD_SENTRY !== undefined &&
-    process.env.APP_SENTRY !== null &&
-    process.env.APP_SENTRY !== "" &&
-    process.env.APP_SENTRY !== undefined &&
+    isConfigure(process.env.TC_DISCORD_SENTRY) &&
+    isConfigure(process.env.APP_SENTRY) &&
     process.env.APP_SENTRY.toLowerCase() === "true"
   ) {
+    return true;
+  }
+
+  return false;
+}
+
+export function isConfigure(environment: string) {
+  if(environment !== null && environment !== undefined && environment !== "") {
     return true;
   }
 
