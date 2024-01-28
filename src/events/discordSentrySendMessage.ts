@@ -16,7 +16,7 @@ const event: BotEvent = {
       return;
     }
 
-    if (isDiscordSentryBlacklisted(message.content.toLocaleLowerCase())) {
+    if (isDiscordSentryBlacklisted(message.channel.id)) {
       return;
     }
 
