@@ -4,45 +4,23 @@ import {
   Collection,
   GatewayIntentBits,
 } from "discord.js";
-import * as dotenv from "dotenv";
 import { readdirSync } from "fs";
 import { join } from "path";
 import { SlashCommand } from "../types";
-import { kill } from "process";
-import { sendError, sendDebug } from "./manager/consoleManager";
-import { discordSentryBlacklistInitialize } from "./manager/discordSentryWordsBlacklist";
+import { discordSentryBlacklistInitialize } from "./manager/discordSentryManager";
+import initConfiguration from "./manager/configurationManager";
 
-dotenv.config();
+initConfiguration();
 
-if (process.env.NODE_ENV != undefined) {
-  const result = require("dotenv").config({
-    path: ".env." + process.env.NODE_ENV,
-  });
-
-  process.env = {
-    ...process.env,
-    ...result.parsed,
-  };
-}
-
-sendDebug("Starting in " + process.env.APP_ENV + " mode.");
-
-if (
-  process.env.APP_ENV != "PROD" &&
-  process.env.APP_ENV != "STAGING" &&
-  process.env.APP_ENV != "DEV"
-) {
-  sendError(
-    "Invalid APP_ENV value. Please set APP_ENV to PROD, STAGING or DEV."
-  );
-  kill(process.pid, "SIGTERM");
-}
+discordSentryBlacklistInitialize();
 
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMessages,
     GatewayIntentBits.MessageContent,
+    GatewayIntentBits.GuildMessageTyping,
+    GatewayIntentBits.GuildMessageReactions,
     GatewayIntentBits.GuildMembers,
   ],
   presence: {
@@ -55,8 +33,6 @@ const client = new Client({
     ],
   },
 });
-
-discordSentryBlacklistInitialize();
 
 client.slashCommands = new Collection<string, SlashCommand>();
 

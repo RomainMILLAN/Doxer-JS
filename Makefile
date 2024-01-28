@@ -19,40 +19,23 @@ dev: ## Run bot at development mode
 dev: build
 	@$(NPM) run start
 
+build-dev: ## Build and run bot at development mode
+build-dev: build dev
+
 ##
 ## —— Docker 🐳 ————————————————————————————————————————————————————————————————
 dc-stop: ## Stop bot at development mode with docker
 dc-stop:
 	@$(DC) stop
 
+dc-start: ## Start bot at development mode with docker
+dc-start: 
+	@$(DC) up -d --build
+
 dc-logs: ## Show logs
 dc-logs:
 	@$(DC) logs
 
-dc-prod: ## Run bot at production mode with docker
-dc-prod: build
-	@$(DC) -f compose.yml -f compose.prod.yml up -d --build
-
-dc-prod-reload: ## Reload bot at development mode with docker
-dc-prod-reload:
-	@$(DC) -f compose.yml -f compose.prod.yml stop
-	@$(DC) -f compose.yml -f compose.prod.yml up -d
-
-dc-staging: ## Run bot at production mode with docker
-dc-staging: build
-	@$(DC) -f compose.yml -f compose.staging.yml up -d --build
-
-dc-staging-reload: ## Reload bot at development mode with docker
-dc-staging-reload:
-	@$(DC) -f compose.yml -f compose.staging.yml stop
-	@$(DC) -f compose.yml -f compose.staging.yml up -d
-
-dc-dev: ## Run bot at development mode with docker
-dc-dev: build
-	@$(DC) -f compose.yml -f compose.dev.yml up -d
-
-dc-dev-reload: ## Reload bot at development mode with docker
-dc-dev-reload:
-	@$(DC) -f compose.yml -f compose.dev.yml stop
-	@npx tsc
-	@$(DC) -f compose.yml -f compose.dev.yml up -d
+dc-logs-watch: ## Show logs in follow mode
+dc-logs-watch:
+	@$(DC) logs -f

@@ -1,7 +1,9 @@
 .vscode/
 dist/
+build/
 node_modules/
 .env
 .env.dev
 .env.staging
 .env.prod
+compose.yml
