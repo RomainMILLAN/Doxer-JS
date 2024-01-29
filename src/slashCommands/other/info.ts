@@ -1,4 +1,10 @@
-import { EmbedBuilder, SlashCommandBuilder } from "discord.js";
+import {
+  ActionRowBuilder,
+  ButtonBuilder,
+  ButtonStyle,
+  EmbedBuilder,
+  SlashCommandBuilder,
+} from "discord.js";
 import { SlashCommand } from "../../../types";
 import { sentry } from "../../manager/sentry";
 import { whiteCheckMark } from "../../manager/enum/icon";
@@ -23,6 +29,7 @@ export const command: SlashCommand = {
               "[Lien vers Github](https://github.com/RomainMILLAN/Doxer-JS)",
           }),
       ],
+      components: [createRowActionButton()],
       ephemeral: true,
     });
 
@@ -31,9 +38,20 @@ export const command: SlashCommand = {
       "Informations",
       whiteCheckMark + " Affichage des informations du bot",
       interaction.user,
-      '/info'
+      "/info"
     );
 
     return;
   },
 };
+
+function createRowActionButton() {
+  const githubButtonLink = new ButtonBuilder()
+    .setURL(`https://github.com/RomainMILLAN/Doxer-JS/`)
+    .setLabel("Repository Github")
+    .setStyle(ButtonStyle.Link);
+
+  const row: any = new ActionRowBuilder().addComponents(githubButtonLink);
+
+  return row;
+}
