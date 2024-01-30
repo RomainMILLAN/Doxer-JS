@@ -21,40 +21,30 @@ import { sendDebug, sendError } from "./consoleManager";
 import sentry from "./sentry";
 import { whiteCheckMark } from "./enum/icon";
 
-const prioritiesTicketCommand: { key: string; value: string }[] = [
-  { key: "ticket-priority-low", value: "Bas" },
-  { key: "ticket-priority-medium", value: "Moyen" },
-  { key: "ticket-priority-high", value: "Haut" },
-];
-
-export async function createTicket(
-  priority: string,
-  user: User,
-  guild: Guild
-): Promise<void> {
-  let ticketPriority = prioritiesTicketCommand.find((p) => p.key === priority);
-
+export async function createTicket(user: User, guild: Guild): Promise<boolean> {
   try {
     const ticketChannel = await createTicketChannelText(user, guild);
 
     const firstMessageTicket = await sendFirstMessageOfTicketChannel(
       ticketChannel,
-      user,
-      ticketPriority
+      user
     );
 
     actionTicketButton(firstMessageTicket, user, ticketChannel);
+
+    return true;
   } catch (error) {
     sendError(
       `Une erreur est survenue lors de la création du ticket (${error}).`
     );
   }
+
+  return false;
 }
 
 async function sendFirstMessageOfTicketChannel(
   ticketChannel: TextChannel,
-  user: User,
-  priority: { key: string; value: string }
+  user: User
 ): Promise<Message<boolean>> {
   const newTicketMessage = await ticketChannel.send({
     embeds: [
@@ -70,11 +60,6 @@ async function sendFirstMessageOfTicketChannel(
           value: `Le ${getCurrentFormattedDateString()} à ${getCurrentFormattedTimeString()}`,
           inline: true,
         })
-        .addFields({
-          name: "➖ Prioritée du ticket",
-          value: `**${priority.value}**`,
-          inline: true,
-        })
         .setTimestamp(),
     ],
     components: [createTicketButton()],
@@ -85,7 +70,7 @@ async function sendFirstMessageOfTicketChannel(
     "Ticket",
     whiteCheckMark + " Demande de la priorité pour la création d'un ticket",
     user,
-    `/ticket priority:${priority.key}`
+    `/ticket`
   );
 
   return newTicketMessage;
