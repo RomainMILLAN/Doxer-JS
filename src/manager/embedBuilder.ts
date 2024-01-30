@@ -20,10 +20,6 @@ export function restrictionMemberEmbed(
   return embed;
 }
 
-export function errorBuilder(title: string = null, description: string = null) {
-  return coloredEmbed(`${interdictionMark} ${title}`, description, "Red");
-}
-
 export function coloredEmbed(
   title: string = null,
   description: string = null,
