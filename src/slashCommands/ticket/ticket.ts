@@ -2,6 +2,7 @@ import { Colors, SlashCommandBuilder } from "discord.js";
 import { SlashCommand } from "../../../types";
 import { EmbedBuilder } from "@discordjs/builders";
 import { createTicket } from "../../manager/ticketManager";
+import { labelMark } from "../../manager/enum/icon";
 
 export const command: SlashCommand = {
   name: "ticket",
@@ -13,7 +14,7 @@ export const command: SlashCommand = {
     const response = await interaction.reply({
       embeds: [
         new EmbedBuilder()
-          .setTitle(`🏷️ Ticket`)
+          .setTitle(`${labelMark} Ticket`)
           .setColor(Colors.Grey)
           .setDescription(`Création de votre ticket en cour...`),
       ],
@@ -26,7 +27,7 @@ export const command: SlashCommand = {
       response.edit({
         embeds: [
           new EmbedBuilder()
-            .setTitle(`🏷️ Ticket`)
+            .setTitle(`${labelMark} Ticket`)
             .setColor(Colors.Green)
             .setDescription(`Votre ticket a bien été créé !`),
         ],

@@ -5,6 +5,7 @@ import {
   getCurrentFormattedTimeString,
 } from "./timeManager";
 import { isConfigure, isSentryEnabled } from "./configurationManager";
+import { writeMark } from "./enum/icon";
 
 export function sentry(
   client: Client,
@@ -18,7 +19,7 @@ export function sentry(
   client.guilds.fetch(process.env.GUILD_ID).then((r) => {
     r.channels.fetch(process.env.TC_SENTRY).then((c: TextChannel) => {
       var embed = new EmbedBuilder()
-        .setTitle(`📝 SENTRY/${title}`)
+        .setTitle(`${writeMark} SENTRY/${title}`)
         .setDescription(`${title} - ${user.toString()}\n > ${description}`)
         .setColor("Orange")
         .setFooter({
@@ -53,7 +54,7 @@ export function discordSentry(
   client.guilds.fetch(process.env.GUILD_ID).then((r) => {
     r.channels.fetch(process.env.TC_DISCORD_SENTRY).then((c: TextChannel) => {
       var embed = new EmbedBuilder()
-        .setTitle(`📝 DISCORD SENTRY/Message`)
+        .setTitle(`${writeMark} DISCORD SENTRY/Message`)
         .setDescription(
           `${type} - ${user.toString()}\n > ${channel.toString()}\n > ${description}`
         )

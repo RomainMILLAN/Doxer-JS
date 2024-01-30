@@ -5,11 +5,11 @@ import {
   TextChannel,
   User,
 } from "discord.js";
-import sentry from "./sentry";
+import { labelMark } from "./enum/icon";
 
 export function createTicketChannelText(user: User, guild: Guild) {
   return guild.channels.create({
-    name: `🏷️-ticket-${user.username}`,
+    name: `${labelMark}-ticket-${user.username}`,
     type: ChannelType.GuildText,
     parent: process.env.C_TICKET,
     permissionOverwrites: [

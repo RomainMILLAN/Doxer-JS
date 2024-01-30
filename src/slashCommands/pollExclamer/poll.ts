@@ -6,8 +6,8 @@ import {
 } from "discord.js";
 import { SlashCommand } from "../../../types";
 import sentry from "../../manager/sentry";
-import { sendDebug } from "../../manager/consoleManager";
 import coloredEmbed from "../../manager/embedBuilder";
+import { questionMark, whiteCheckMark, xMark } from "../../manager/enum/icon";
 
 export const command: SlashCommand = {
   name: "poll",
@@ -31,7 +31,7 @@ export const command: SlashCommand = {
     ),
   execute: async (interaction) => {
     const question = interaction.options.get("question").value;
-    let choicesText = "✅, ❌";
+    let choicesText = `${whiteCheckMark}, ${xMark}`;
 
     if (interaction.options.get("choix") !== null) {
       choicesText = String(interaction.options.get("choix").value);
@@ -47,7 +47,7 @@ export const command: SlashCommand = {
     interaction.reply({
       embeds: [
         coloredEmbed(
-          `Sondage ❓`,
+          `Sondage ${questionMark}`,
           `Votre sondage (\`${question}\`) à était crée avec succès.`,
           Colors.Green
         ),
@@ -60,7 +60,9 @@ export const command: SlashCommand = {
       .send({
         embeds: [
           new EmbedBuilder()
-            .setTitle(`Sondage de ${interaction.user.displayName} ❓`)
+            .setTitle(
+              `Sondage de ${interaction.user.displayName} ${questionMark}`
+            )
             .setThumbnail(interaction.user.avatarURL())
             .setDescription(`${question}`)
             .setFooter({ text: footerText })

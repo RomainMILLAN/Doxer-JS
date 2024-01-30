@@ -1,9 +1,10 @@
-import { LineNotify } from "./notifier/LineNotify";
-import { DiscordNotify } from "./notifier/DiscordNotify";
 import { colors, sendDebug } from "./consoleManager";
+import { statisticMark, whiteCheckMark } from "./enum/icon";
+import { DiscordNotify } from "./notifier/DiscordNotify";
+import { LineNotify } from "./notifier/LineNotify";
 
 export async function sendUptime() {
-  if (process.env.APP_ENV !== "PROD") return;
+  if (process.env.APP_ENV !== `PROD`) return;
 
   sendLineUptime();
   sendDiscordUptime();
@@ -11,12 +12,10 @@ export async function sendUptime() {
 
 function sendLineUptime() {
   const lineNotify = new LineNotify();
-  const body = "message=✅ DoxerJS connecté";
+  const body = `message=${whiteCheckMark} DoxerJS connecté`;
 
   lineNotify.send(body);
-  sendDebug(
-    "Uptime: " + colors.underscore + "Line" + colors.reset + " notify send"
-  );
+  sendDebug(`Uptime: ${colors.underscore}Line${colors.reset} notify send`);
 }
 
 async function sendDiscordUptime() {
@@ -24,16 +23,16 @@ async function sendDiscordUptime() {
   const body = {
     embeds: [
       {
-        title: "📊 Service connexion",
-        color: "65280",
+        title: `${statisticMark} Service connexion`,
+        color: `65280`,
         fields: [
           {
-            name: "Service name",
-            value: "Doxer JS",
+            name: `Service name`,
+            value: `Doxer JS`,
           },
           {
-            name: "State",
-            value: "Bot connecté ✅",
+            name: `State`,
+            value: `Bot connecté ${whiteCheckMark}`,
           },
         ],
       },
@@ -42,7 +41,7 @@ async function sendDiscordUptime() {
 
   discordNotify.send(body);
   sendDebug(
-    "Uptime: " + colors.underscore + "Discord" + colors.reset + " notify send"
+    `Uptime: ` + colors.underscore + `Discord` + colors.reset + ` notify send`
   );
 }
 

@@ -1,11 +1,12 @@
 import { EmbedBuilder } from "discord.js";
+import { interdictionMark } from "./enum/icon";
 
 export function restrictionMemberEmbed(
   permission: string | null = null,
   description: string = `Vous n'avez pas la permission d'utiliser cette commande.`
 ) {
   var embed = new EmbedBuilder()
-    .setTitle("🚫 Accès refusé")
+    .setTitle(`${interdictionMark} Accès refusé`)
     .setDescription(description)
     .setColor("Red");
 
@@ -20,7 +21,7 @@ export function restrictionMemberEmbed(
 }
 
 export function errorBuilder(title: string = null, description: string = null) {
-  return coloredEmbed(`🚫 ${title}`, description, "Red");
+  return coloredEmbed(`${interdictionMark} ${title}`, description, "Red");
 }
 
 export function coloredEmbed(

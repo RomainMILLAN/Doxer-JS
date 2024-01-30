@@ -19,7 +19,7 @@ import {
 } from "./timeManager";
 import { sendDebug, sendError } from "./consoleManager";
 import sentry from "./sentry";
-import { whiteCheckMark } from "./enum/icon";
+import { labelMark, timeMark, whiteCheckMark, xMark } from "./enum/icon";
 
 export async function createTicket(user: User, guild: Guild): Promise<boolean> {
   try {
@@ -49,14 +49,14 @@ async function sendFirstMessageOfTicketChannel(
   const newTicketMessage = await ticketChannel.send({
     embeds: [
       new EmbedBuilder()
-        .setTitle(`🏷️ Ticket de ${user.displayName}`)
+        .setTitle(`${labelMark} Ticket de ${user.displayName}`)
         .setThumbnail(user.displayAvatarURL())
         .setColor(Colors.LightGrey)
         .setDescription(
           `Bonjour, ${user.toString()} !\nBienvenue sur votre ticket, veuillez décrire votre problème et nous vous répondrons dès que possible.\nMerci de votre patience.\n\n> Le staff.`
         )
         .addFields({
-          name: "🕜 Date de création",
+          name: `${timeMark} Date de création`,
           value: `Le ${getCurrentFormattedDateString()} à ${getCurrentFormattedTimeString()}`,
           inline: true,
         })
@@ -79,7 +79,7 @@ async function sendFirstMessageOfTicketChannel(
 function createTicketButton() {
   const closeTicket = new ButtonBuilder()
     .setCustomId("ticketDelete")
-    .setLabel("❌ Suppression du ticket")
+    .setLabel(`${xMark} Suppression du ticket`)
     .setStyle(ButtonStyle.Danger);
 
   const row: any = new ActionRowBuilder().addComponents(closeTicket);
