@@ -1,9 +1,12 @@
 import { EmbedBuilder } from "discord.js";
 
-export function permErrorBuilder(permission: string = null) {
+export function restrictionMemberEmbed(
+  permission: string | null = null,
+  description: string = `Vous n'avez pas la permission d'utiliser cette commande.`
+) {
   var embed = new EmbedBuilder()
     .setTitle("🚫 Accès refusé")
-    .setDescription("Vous n'avez pas la permission d'utiliser cette commande.")
+    .setDescription(description)
     .setColor("Red");
 
   if (null !== permission) {

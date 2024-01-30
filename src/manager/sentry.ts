@@ -4,18 +4,7 @@ import {
   getCurrentFormattedDateString,
   getCurrentFormattedTimeString,
 } from "./timeManager";
-import { isConfigure } from "./configurationManager";
-
-function isSentryEnabled(): boolean {
-  if (
-    isConfigure(process.env.APP_SENTRY) && 
-    process.env.APP_SENTRY.toLocaleLowerCase() === "true"
-  ) {
-    return true;
-  }
-
-  return false;
-}
+import { isConfigure, isSentryEnabled } from "./configurationManager";
 
 export function sentry(
   client: Client,
@@ -24,11 +13,7 @@ export function sentry(
   user: User,
   command: string | null = null
 ) {
-  if (
-    !isConfigure(process.env.TC_SENTRY) ||
-    !isSentryEnabled()
-  )
-    return;
+  if (!isConfigure(process.env.TC_SENTRY) || !isSentryEnabled()) return;
 
   client.guilds.fetch(process.env.GUILD_ID).then((r) => {
     r.channels.fetch(process.env.TC_SENTRY).then((c: TextChannel) => {
@@ -38,7 +23,8 @@ export function sentry(
         .setColor("Orange")
         .setFooter({
           text: `Le ${getCurrentFormattedDateString()} à ${getCurrentFormattedTimeString()}`,
-        });
+        })
+        .setTimestamp();
 
       if (null !== command) {
         embed.addFields({
@@ -62,11 +48,7 @@ export function discordSentry(
   description: string,
   user: User
 ) {
-  if (
-    !isConfigure(process.env.TC_SENTRY) ||
-    !isSentryEnabled()
-  )
-    return;
+  if (!isConfigure(process.env.TC_SENTRY) || !isSentryEnabled()) return;
 
   client.guilds.fetch(process.env.GUILD_ID).then((r) => {
     r.channels.fetch(process.env.TC_DISCORD_SENTRY).then((c: TextChannel) => {
@@ -78,7 +60,8 @@ export function discordSentry(
         .setColor("Orange")
         .setFooter({
           text: `Le ${getCurrentFormattedDateString()} à ${getCurrentFormattedTimeString()}`,
-        });
+        })
+        .setTimestamp();
 
       c.send({
         embeds: [embed],
