@@ -46,6 +46,25 @@ export function slashCommandStaffRestriction(
  * @param title title of sentry if not authorized
  * @returns boolean true (authorized) | false (not authorized)
  */
+export function slashCommandOpRestriction(
+  interaction: CommandInteraction,
+  command: string,
+  title: string
+): boolean {
+  if (isMemberOp(interaction.member as GuildMember)) {
+    return true;
+  }
+
+  slashCommandNotAuthorized(interaction, command, title);
+  return false;
+}
+
+/**
+ * @param interaction interaction to check
+ * @param command command to send to sentry if not authorized
+ * @param title title of sentry if not authorized
+ * @returns boolean true (authorized) | false (not authorized)
+ */
 export function isRestrictedOP(
   interaction: CommandInteraction,
   command: string,

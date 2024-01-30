@@ -12,6 +12,7 @@ import {
   vocalMark,
   writeMark,
 } from "../../manager/enum/icon";
+import { slashCommandOpRestriction } from "../../manager/permissionManager";
 
 export const command: SlashCommand = {
   name: "serverinfo",
@@ -21,6 +22,9 @@ export const command: SlashCommand = {
     .setDefaultMemberPermissions(PermissionsBitField.Flags.Administrator)
     .setDMPermission(false),
   execute: async (interaction) => {
+    if (!slashCommandOpRestriction(interaction, `/serverinfo`, `ServerInfo`))
+      return;
+
     interaction.reply({
       embeds: [
         new EmbedBuilder()
