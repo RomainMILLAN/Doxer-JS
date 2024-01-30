@@ -1,9 +1,23 @@
-import { Colors, EmbedBuilder, Guild, User } from "discord.js";
-import { createTicketChannelText } from "./channelManager";
+import {
+  ActionRowBuilder,
+  ButtonBuilder,
+  ButtonStyle,
+  Colors,
+  EmbedBuilder,
+  Guild,
+  User,
+} from "discord.js";
+import {
+  createTicketChannelText,
+  deleteTicketChannelText,
+} from "./channelManager";
 import {
   getCurrentFormattedDateString,
   getCurrentFormattedTimeString,
 } from "./timeManager";
+import { sendDebug, sendError } from "./consoleManager";
+import sentry from "./sentry";
+import { whiteCheckMark } from "./enum/icon";
 
 const prioritiesTicketCommand: { key: string; value: string }[] = [
   { key: "ticket-priority-low", value: "Bas" },
@@ -19,9 +33,16 @@ export async function createTicket(
   let ticketPriority = prioritiesTicketCommand.find((p) => p.key === priority);
 
   try {
-    const createdChannel = await createTicketChannelText(user, guild);
+    const ticketChannel = await createTicketChannelText(user, guild);
 
-    createdChannel.send({
+    const closeTicket = new ButtonBuilder()
+      .setCustomId("ticketDelete")
+      .setLabel("❌ Suppression du ticket")
+      .setStyle(ButtonStyle.Danger);
+
+    const row: any = new ActionRowBuilder().addComponents(closeTicket);
+
+    const newTicketMessage = await ticketChannel.send({
       embeds: [
         new EmbedBuilder()
           .setTitle(`🏷️ Ticket de ${user.displayName}`)
@@ -42,8 +63,42 @@ export async function createTicket(
           })
           .setTimestamp(),
       ],
+      components: [row],
     });
+
+    sentry(
+      user.client,
+      "Ticket",
+      whiteCheckMark + " Demande de la priorité pour la création d'un ticket",
+      user,
+      `/ticket priority:${priority}`
+    );
+
+    try {
+      const buttonAction = await newTicketMessage.awaitMessageComponent({
+        time: 3_600_000,
+      });
+
+      if (buttonAction.customId === "ticketDelete") {
+        sendDebug(`Suppression du ticket de ${user.tag}.`);
+
+        sentry(
+          buttonAction.user.client,
+          "Ticket",
+          `${whiteCheckMark} Suppression d'un ticket (${ticketChannel.name})`,
+          buttonAction.user
+        );
+
+        deleteTicketChannelText(ticketChannel, user);
+
+        return;
+      }
+    } catch (e) {
+      sendError(`Une erreur est survenur sur les actions des tickets (${e}).`);
+    }
   } catch (error) {
-    console.error(error);
+    sendError(
+      `Une erreur est survenue lors de la création du ticket (${error}).`
+    );
   }
 }

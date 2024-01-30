@@ -1,9 +1,4 @@
-import {
-  Colors,
-  ComponentType,
-  PermissionFlagsBits,
-  SlashCommandBuilder,
-} from "discord.js";
+import { Colors, ComponentType, SlashCommandBuilder } from "discord.js";
 import { SlashCommand } from "../../../types";
 import {
   ActionRowBuilder,
@@ -11,9 +6,6 @@ import {
   StringSelectMenuBuilder,
   StringSelectMenuOptionBuilder,
 } from "@discordjs/builders";
-import sentry from "../../manager/sentry";
-import { whiteCheckMark } from "../../manager/enum/icon";
-import { sendDebug } from "../../manager/consoleManager";
 import { createTicket } from "../../manager/ticketManager";
 
 export const command: SlashCommand = {
@@ -40,30 +32,12 @@ export const command: SlashCommand = {
       time: 3_600_000,
     });
 
-    collector.on("collect", async (i) => {
+    collector.on("collect", async (buttonActionInteract) => {
       interaction.deleteReply();
 
-      const selection = i.values[0];
+      const selection = buttonActionInteract.values[0];
       await createTicket(selection, interaction.user, interaction.guild);
-
-      await i.reply({
-        embeds: [
-          new EmbedBuilder()
-            .setTitle(`🏷️ Ticket`)
-            .setColor(Colors.Green)
-            .setDescription(`Votre ticket vient d'être crée.`),
-        ],
-        components: [],
-      });
     });
-
-    // sentry(
-    //   interaction.client,
-    //   "Ticket",
-    //   whiteCheckMark + " Demande de la priorité pour la création d'un ticket",
-    //   interaction.user,
-    //   "/ticket"
-    // );
 
     return;
   },

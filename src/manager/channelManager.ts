@@ -1,4 +1,11 @@
-import { ChannelType, Guild, PermissionsBitField, User } from "discord.js";
+import {
+  ChannelType,
+  Guild,
+  PermissionsBitField,
+  TextChannel,
+  User,
+} from "discord.js";
+import sentry from "./sentry";
 
 export function createTicketChannelText(user: User, guild: Guild) {
   return guild.channels.create({
@@ -31,4 +38,8 @@ export function createTicketChannelText(user: User, guild: Guild) {
       },
     ],
   });
+}
+
+export function deleteTicketChannelText(channel: TextChannel, user: User) {
+  channel.delete(`Ticket close by ${user.tag}`);
 }
