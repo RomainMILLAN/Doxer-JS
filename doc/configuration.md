@@ -43,22 +43,6 @@ Cette variable doit contenir l'identifiant d'un channel texte.
 La variable d'environnement `TC_DISCORD_SENTRY` indique à Discord Sentry ou les messages recus doivent être envoyer.
 Cette variable doit contenir l'identifiant d'un channel texte.
 
-### VoiceClick Category
-
-La variable d'environnement `VC_CATEGORY` indique à VoiceClick la catégorie ou crée les channels vocaux.
-
-### Open Weather API
-
-La variable d'environnement `OPEN_WEATHER_API` est la clef API pour faire appelle aux service de l'API de Open Weather Map.
-
-### Ville par défaut
-
-La variable d'environnement `WEATHER_DEFAULT_CITY` est la ville par défaut appeller pour la commande `/weather`.
-
-### Liste des mots non logger
-
-La variable d'environnement `DISCORD_SENTRY_BLACKLIST` sert à spécifier les channels qui ne seront pas enregistrés par DiscordSentry. Pour l'utiliser, il suffit de lister tous les identifiants en minuscules, séparés par des virgules, comme suit : <br/>`DISCORD_SENTRY_BLACKLIST="1111111111,222222222222,333333333"` => ainsi, les messages contenant exactement les channels avec les identifiants `1111111111`, `222222222222` et `333333333` seront ignorés par Discord Sentry.
-
 <br>
 
 ### Environnement🏷️
@@ -76,9 +60,25 @@ Plusieurs valeurs possible: `FALSE` ou `TRUE`
 `APP_SENTRY` désigne si sentry doit s'activer.
 Plusieurs valeurs possible: `FALSE` ou `TRUE`
 
-<br>
-
 ### Webhook
 
 `DISCORD_WEBHOOK_URL` désigne l'url de la webhook de monitoring.<br/>
 `LINE_NOTIFY_TOKEN` désigne le token de notify pour le monitoring.
+
+<br>
+
+### VoiceClick Category
+
+La variable d'environnement `VC_CATEGORY` indique à VoiceClick la catégorie ou crée les channels vocaux.
+
+### Open Weather API
+
+La variable d'environnement `OPEN_WEATHER_API` est la clef API pour faire appelle aux service de l'API de Open Weather Map.
+
+### Ville par défaut
+
+La variable d'environnement `WEATHER_DEFAULT_CITY` est la ville par défaut appeller pour la commande `/weather`.
+
+### Liste des mots non logger
+
+La variable d'environnement `DISCORD_SENTRY_BLACKLIST` sert à spécifier les channels qui ne seront pas enregistrés par DiscordSentry. Pour l'utiliser, il suffit de lister tous les identifiants en minuscules, séparés par des virgules, comme suit : <br/>`DISCORD_SENTRY_BLACKLIST="1111111111,222222222222,333333333"` => ainsi, les messages contenant exactement les channels avec les identifiants `1111111111`, `222222222222` et `333333333` seront ignorés par Discord Sentry.
