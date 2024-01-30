@@ -1,6 +1,5 @@
 import { SlashCommandBuilder, Colors, EmbedBuilder } from "discord.js";
 import { SlashCommand } from "../../../types";
-import { coloredEmbed } from "../../manager/embedBuilder";
 import sentry from "../../manager/sentry";
 import { interdictionMark, windowMark } from "../../manager/enum/icon";
 
@@ -19,11 +18,10 @@ export const command: SlashCommand = {
     if (!user) {
       interaction.reply({
         embeds: [
-          coloredEmbed(
-            `${interdictionMark} Utilisateur non trouvée`,
-            "Vous devez indiquer un utilisateur valide ",
-            Colors.Red.toString()
-          ),
+          new EmbedBuilder()
+            .setTitle(`${interdictionMark} Utilisateur non trouvée`)
+            .setDescription(`Vous devez indiquer un utilisateur valide`)
+            .setColor(Colors.Red),
         ],
         ephemeral: true,
       });

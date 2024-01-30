@@ -7,7 +7,6 @@ import {
 } from "discord.js";
 import { SlashCommand } from "../../../types";
 import sentry from "../../manager/sentry";
-import { coloredEmbed } from "../../manager/embedBuilder";
 import { whiteCheckMark, xMark } from "../../manager/enum/icon";
 
 export const command: SlashCommand = {
@@ -39,11 +38,12 @@ export const command: SlashCommand = {
       .then((channel) => {
         interaction.reply({
           embeds: [
-            coloredEmbed(
-              `Création d'une salle audio`,
-              `Votre salle audio a été créée (\`${channel.name.toString()}\`)`,
-              "Gold"
-            ),
+            new EmbedBuilder()
+              .setTitle(`${whiteCheckMark} Création d'une salle audio`)
+              .setDescription(
+                `Votre salle audio a été créée (\`${channel.name.toString()}\`)`
+              )
+              .setColor(Colors.Gold),
           ],
           ephemeral: true,
         });

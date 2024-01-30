@@ -19,18 +19,3 @@ export function restrictionMemberEmbed(
 
   return embed;
 }
-
-export function coloredEmbed(
-  title: string = null,
-  description: string = null,
-  color = null
-) {
-  var embed = new EmbedBuilder()
-    .setTitle(title)
-    .setDescription(description)
-    .setColor(color);
-
-  return embed;
-}
-
-export default coloredEmbed;

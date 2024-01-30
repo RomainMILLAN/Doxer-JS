@@ -6,7 +6,6 @@ import {
 } from "discord.js";
 import { SlashCommand } from "../../../types";
 import sentry from "../../manager/sentry";
-import coloredEmbed from "../../manager/embedBuilder";
 import { questionMark, whiteCheckMark, xMark } from "../../manager/enum/icon";
 
 export const command: SlashCommand = {
@@ -46,11 +45,12 @@ export const command: SlashCommand = {
 
     interaction.reply({
       embeds: [
-        coloredEmbed(
-          `Sondage ${questionMark}`,
-          `Votre sondage (\`${question}\`) à était crée avec succès.`,
-          Colors.Green
-        ),
+        new EmbedBuilder()
+          .setTitle(`Sondage ${questionMark}`)
+          .setDescription(
+            `Votre sondage (\`${question}\`) à était crée avec succès.`
+          )
+          .setColor(Colors.Green),
       ],
       ephemeral: true,
     });
