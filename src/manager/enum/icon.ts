@@ -12,6 +12,10 @@ export const robotMark = "🤖";
 export const arrowUpMark = "▲";
 export const arrowDownMark = "▼";
 export const weatherMark = "⛅️";
+export const vocalMark = "🔊";
+export const folderMark = "📁";
+export const userMark = "👤";
+export const crownMark = "👑";
 
 export const weatherTermostat = "🌡";
 export const weatherWind = "🌬";
