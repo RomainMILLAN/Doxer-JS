@@ -18,24 +18,3 @@ build:
 dev: ## Run bot at development mode
 dev: build
 	@$(NPM) run start
-
-build-dev: ## Build and run bot at development mode
-build-dev: build dev
-
-##
-## —— Docker 🐳 ————————————————————————————————————————————————————————————————
-dc-stop: ## Stop bot at development mode with docker
-dc-stop:
-	@$(DC) stop
-
-dc-start: ## Start bot at development mode with docker
-dc-start: 
-	@$(DC) up -d --build
-
-dc-logs: ## Show logs
-dc-logs:
-	@$(DC) logs
-
-dc-logs-watch: ## Show logs in follow mode
-dc-logs-watch:
-	@$(DC) logs -f
