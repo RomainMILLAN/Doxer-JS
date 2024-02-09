@@ -1,85 +1,133 @@
-import { SlashCommandBuilder, Colors, EmbedBuilder, PermissionFlagsBits, GuildMemberRoleManager } from "discord.js";
+import {
+  SlashCommandBuilder,
+  Colors,
+  EmbedBuilder,
+  GuildMemberRoleManager,
+  User,
+  GuildMember,
+  PermissionsBitField,
+} from "discord.js";
 import { SlashCommand } from "../../../types";
 import { sentry } from "../../manager/sentry";
-import coloredEmbed, { permErrorBuilder } from "../../manager/embedBuilder";
 import { whiteCheckMark, xMark } from "../../manager/enum/icon";
+import {
+  isMemberStaff,
+  slashCommandStaffRestriction,
+} from "../../manager/permissionManager";
 
 export const command: SlashCommand = {
-    name: "confirm",
-    data: new SlashCommandBuilder()
-        .setName("confirm")
-        .setDescription("Confirmer un utilisateur")
-        .setDMPermission(false)
-        .setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers)
-        .addUserOption(option => 
-            option
-                .setName('user')
-                .setDescription('Utilisateur à confirmer')
-                .setRequired(true),
-        )
-        .addRoleOption(option => 
-            option
-                .setName('role')
-                .setDescription('Rôle à attribuée')
-                .setRequired(true),
-        )
-        .addStringOption(option =>
-            option
-                .setName('nickname')
-                .setDescription('Pseudo à attribuer')
-                .setRequired(false),
-        ),
-    execute: async (interaction) => {
-        const user = interaction.user;
-        const roleStaffId = process.env.R_STAFF;
-        const userSelect = interaction.guild.members.cache.get(interaction.options.get('user').value.toString());
-        const roleSelect = interaction.options.get('role');
-        let command = `/confirm user:${userSelect.id.toString()} role:${roleSelect.value.toString()}`;
+  name: "confirm",
+  data: new SlashCommandBuilder()
+    .setName("confirm")
+    .setDescription("Confirmer un utilisateur")
+    .setDMPermission(false)
+    .setDefaultMemberPermissions(PermissionsBitField.Flags.ModerateMembers)
+    .addUserOption((option) =>
+      option
+        .setName("user")
+        .setDescription("Utilisateur à confirmer")
+        .setRequired(true)
+    )
+    .addRoleOption((option) =>
+      option
+        .setName("role")
+        .setDescription("Rôle à attribuée")
+        .setRequired(true)
+    )
+    .addStringOption((option) =>
+      option
+        .setName("nickname")
+        .setDescription("Pseudo à attribuer")
+        .setRequired(false)
+    ),
+  execute: async (interaction) => {
+    const user: User = interaction.user;
+    const userSelect: GuildMember = interaction.guild.members.cache.get(
+      interaction.options.get("user").value.toString()
+    );
+    const roleSelect: any = interaction.options.get("role");
 
-        if (false == (interaction.member.roles as GuildMemberRoleManager).cache.has(roleStaffId)) {
-            interaction.reply({
-                embeds: [
-                    permErrorBuilder('STAFF')
-                ],
-                ephemeral: true,
-            });
-    
-            sentry(
-                interaction.client,
-                'DiscordGuard/Confirm',
-                xMark + ' Permission manquante (\`STAFF\`)',
-                user,
-                `/confirm user:${userSelect.id.toString()} role:${roleSelect.value.toString()}`,
-            )
-    
-            return;
-        }
+    let command: string = `/confirm user:${userSelect.id.toString()} role:${roleSelect.value.toString()}`;
+    let nickname: string | null = null;
+    let confirmDescription = `L'utilisateur ${userSelect.toString()} à était confirmer avec le rôle ${
+      roleSelect.role
+    }`;
 
-        (userSelect.roles as GuildMemberRoleManager).add(roleSelect.value.toString());
-
-        if(null !== interaction.options.get('nickname')) {
-            let nickname = interaction.options.get('nickname').value.toString();
-
-            userSelect.setNickname(nickname);
-            command += ` nickname:${nickname.toString()}`;
-        }
-
-        interaction.reply({
-            embeds: [
-                coloredEmbed(
-                    `Confirmation d'utilisateur`,
-                    `L'utilisateur ${userSelect.toString()} à était confirmer avec le rôle \`${roleSelect.role.name}\``,
-                    Colors.Green,
-                )
-            ]
-        });
-
-        sentry(
-            interaction.client,
-            `DiscordGuard/Confirm`,
-            whiteCheckMark + ` Confirmation d'utilisateur (\`${userSelect.id.toString()}\` | \`${roleSelect.role.name}\`)`,
-            user,
-            command,
-        )
+    if (null !== interaction.options.get("nickname")) {
+      nickname = interaction.options.get("nickname").value.toString();
+      command += ` nickname:${nickname.toString()}`;
     }
+
+    if (
+      !slashCommandStaffRestriction(
+        interaction,
+        command,
+        "DiscordGuard/Confirm"
+      )
+    ) {
+      return;
+    }
+
+    if (memberCannotConfirmed(userSelect)) {
+      interaction.reply({
+        embeds: [
+          new EmbedBuilder()
+            .setTitle(`${xMark} Confirmation d'utilisateur`)
+            .setDescription(
+              `L'utilisateur ${userSelect.toString()} à déjà était confirmer`
+            )
+            .setColor(Colors.Red),
+        ],
+      });
+
+      sentry(
+        interaction.client,
+        `DiscordGuard/Confirm`,
+        `${xMark} Confirmation d'un utilisateur déjà confirmer impossible (\`${userSelect.id.toString()}\` | \`${
+          roleSelect.role.name
+        }\`)`,
+        user,
+        command
+      );
+
+      return;
+    }
+
+    (userSelect.roles as GuildMemberRoleManager).add(
+      roleSelect.value.toString()
+    );
+
+    if (undefined !== nickname) {
+      userSelect.setNickname(nickname);
+      confirmDescription += ` et le pseudo \`${nickname}\``;
+    }
+
+    interaction.reply({
+      embeds: [
+        new EmbedBuilder()
+          .setTitle(`Confirmation d'utilisateur`)
+          .setDescription(confirmDescription)
+          .setColor(Colors.Green),
+      ],
+    });
+
+    sentry(
+      interaction.client,
+      `DiscordGuard/Confirm`,
+      whiteCheckMark +
+        ` Confirmation d'utilisateur (\`${userSelect.id.toString()}\` | \`${
+          roleSelect.role.name
+        }\`)`,
+      user,
+      command
+    );
+  },
+};
+
+/**
+ * @param member member to check
+ * @returns boolean true (member can't confirm) | false (member is confirmable)
+ */
+function memberCannotConfirmed(member: GuildMember): boolean {
+  return isMemberStaff(member);
 }
