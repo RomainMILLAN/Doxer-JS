@@ -16,6 +16,7 @@ export const command: SlashCommand = {
     .setDescription(
       "Crée une salle audio (NE PAS UTILISER, TOUS LES USERS PEUVENT LES VOIR / REJOINDRE)"
     )
+    .setDefaultMemberPermissions(PermissionsBitField.Flags.Administrator)
     .setDMPermission(false),
   execute: async (interaction) => {
     interaction.guild.channels

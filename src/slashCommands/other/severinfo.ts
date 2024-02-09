@@ -19,7 +19,7 @@ export const command: SlashCommand = {
   data: new SlashCommandBuilder()
     .setName("serverinfo")
     .setDescription("Affiche les informations du serveur")
-    .setDefaultMemberPermissions(PermissionsBitField.Flags.Administrator)
+    .setDefaultMemberPermissions(PermissionsBitField.Flags.ManageGuild)
     .setDMPermission(false),
   execute: async (interaction) => {
     if (!slashCommandOpRestriction(interaction, `/serverinfo`, `ServerInfo`))

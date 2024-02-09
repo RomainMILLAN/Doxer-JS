@@ -46,12 +46,17 @@ export const command: SlashCommand = {
 };
 
 function createRowActionButton() {
+  const romainMillanLink = new ButtonBuilder()
+    .setURL(`https://romainmillan.fr/`)
+    .setLabel("Romain MILLAN")
+    .setStyle(ButtonStyle.Link);
+
   const githubButtonLink = new ButtonBuilder()
     .setURL(`https://github.com/RomainMILLAN/Doxer-JS/`)
     .setLabel("Repository Github")
     .setStyle(ButtonStyle.Link);
 
-  const row: any = new ActionRowBuilder().addComponents(githubButtonLink);
+  const row: any = new ActionRowBuilder().addComponents(romainMillanLink, githubButtonLink);
 
   return row;
 }
