@@ -25,6 +25,11 @@ export async function createTicket(user: User, guild: Guild): Promise<boolean> {
   try {
     const ticketChannel = await createTicketChannelText(user, guild);
 
+    if(ticketChannel === null) {
+      sendError("La configuration pour les tickets n'est pas configurée. (C_TICKET)");
+      return false;
+    }
+
     const firstMessageTicket = await sendFirstMessageOfTicketChannel(
       ticketChannel,
       user

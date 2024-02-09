@@ -3,6 +3,7 @@ import { SlashCommand } from "../../../types";
 import { EmbedBuilder } from "@discordjs/builders";
 import { createTicket } from "../../manager/ticketManager";
 import { labelMark } from "../../manager/enum/icon";
+import { sendDebug } from "../../manager/consoleManager";
 
 export const command: SlashCommand = {
   name: "ticket",
@@ -21,7 +22,7 @@ export const command: SlashCommand = {
       ephemeral: true,
     });
 
-    const isTicketCreated = createTicket(interaction.user, interaction.guild);
+    const isTicketCreated = await createTicket(interaction.user, interaction.guild);
 
     if (isTicketCreated) {
       response.edit({
@@ -30,6 +31,15 @@ export const command: SlashCommand = {
             .setTitle(`${labelMark} Ticket`)
             .setColor(Colors.Green)
             .setDescription(`Votre ticket a bien été créé !`),
+        ],
+      });
+    }else {
+      response.edit({
+        embeds: [
+          new EmbedBuilder()
+            .setTitle(`${labelMark} Ticket`)
+            .setColor(Colors.Red)
+            .setDescription(`Une erreur est survenue, veuillez réessayer plus tard.`),
         ],
       });
     }

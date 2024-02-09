@@ -6,8 +6,14 @@ import {
   User,
 } from "discord.js";
 import { labelMark } from "./enum/icon";
+import { isConfigure } from "./configurationManager";
 
 export function createTicketChannelText(user: User, guild: Guild) {
+
+  if(!isConfigure(process.env.C_TICKET)) {
+    return null;
+  }
+
   return guild.channels.create({
     name: `${labelMark}-ticket-${user.username}`,
     type: ChannelType.GuildText,
