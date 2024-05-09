@@ -1,23 +1,13 @@
 import { colors, sendDebug } from "./consoleManager";
 import { statisticMark, whiteCheckMark } from "./enum/icon";
 import { DiscordNotify } from "./notifier/DiscordNotify";
-import { LineNotify } from "./notifier/LineNotify";
 import { SignalNotify } from "./notifier/SignalNotify";
 
 export async function sendUptime() {
   if (process.env.APP_ENV === `DEV`) return;
 
-  sendLineUptime();
   sendSignalUptime();
   sendDiscordUptime();
-}
-
-function sendLineUptime() {
-  const lineNotify = new LineNotify();
-  const body = `message=${whiteCheckMark} ${process.env.SERVICE_NAME}(DoxerJS) connecté`;
-
-  lineNotify.send(body);
-  sendDebug(`Uptime: ${colors.underscore}Line${colors.reset} notify send`);
 }
 
 function sendSignalUptime() {
