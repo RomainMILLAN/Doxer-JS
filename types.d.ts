@@ -24,8 +24,11 @@ declare global {
       APP_ENV: string;
       APP_DEBUGING: string;
       APP_SENTRY: string;
-      DISCORD_WEBHOOK_URL: string;
-      LINE_NOTIFY_TOKEN: string;
+      
+      SERVICE_NAME: string;
+      SIGNAL_API_HOST: string;
+      SIGNAL_API_SENDER_NUMBER: string;
+      SIGNAL_API_RECEIVER: string;
     }
   }
 }
