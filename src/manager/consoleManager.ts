@@ -1,3 +1,6 @@
+import { writeFileSync } from "fs";
+import { getCurrentFormattedDateString, getCurrentFormattedTimeString, getCurrentFormattedDateFileString } from "./timeManager";
+
 const date = new Date();
 
 export const colors = {
@@ -35,11 +38,21 @@ export const colors = {
   },
 };
 
-function prefixEnvironmentStage() {
+function prefixEnvironmentStageTemplated() {
   if (process.env.APP_ENV == "DEV") {
     return colors.bg.cyan + "[DEVELOPMENT]" + colors.reset;
   } else if (process.env.APP_ENV == "STAGING") {
     return colors.bg.red + "[STAGING]" + colors.reset;
+  } else {
+    return "";
+  }
+}
+
+function getPrefixEnvironmentStage() {
+  if (process.env.APP_ENV == "DEV") {
+    return "[DEVELOPMENT]";
+  } else if (process.env.APP_ENV == "STAGING") {
+    return "[STAGING]";
   } else {
     return "";
   }
@@ -58,15 +71,27 @@ function prefixTimestampTemplated() {
     date.getHours() +
     ":" +
     date.getMinutes() +
+    ":" +
+    date.getSeconds() +
     "]" +
     colors.reset +
     " "
   );
 }
 
+function getPrefixTimestamp() {
+  return (
+    "[" +
+    getCurrentFormattedDateString() +
+    " " +
+    getCurrentFormattedTimeString() +
+    "]"
+  );
+}
+
 export function sendInfo(body: string) {
   console.log(
-    prefixEnvironmentStage() +
+    prefixEnvironmentStageTemplated() +
       " " +
       prefixTimestampTemplated() +
       colors.bg.cyan +
@@ -87,7 +112,7 @@ export function sendDebug(body: string) {
   }
 
   console.log(
-    prefixEnvironmentStage() +
+    prefixEnvironmentStageTemplated() +
       " " +
       prefixTimestampTemplated() +
       "\x1b[45mDEBUG\x1b[0m " +
@@ -97,7 +122,7 @@ export function sendDebug(body: string) {
 
 export function sendError(body: string) {
   console.log(
-    prefixEnvironmentStage() +
+    prefixEnvironmentStageTemplated() +
       " " +
       prefixTimestampTemplated() +
       colors.bg.red +
@@ -110,13 +135,13 @@ export function sendError(body: string) {
 
 export function sendConsole(body: string) {
   console.log(
-    prefixEnvironmentStage() + " " + this.prefixTimestampTemplated() + body
+    prefixEnvironmentStageTemplated() + " " + this.prefixTimestampTemplated() + body
   );
 }
 
 export function sendLog(body: string) {
   console.log(
-    prefixEnvironmentStage() +
+    prefixEnvironmentStageTemplated() +
       " " +
       prefixTimestampTemplated() +
       colors.bg.yellow +
@@ -125,11 +150,19 @@ export function sendLog(body: string) {
       " " +
       body
   );
+
+  exportToFile(
+    getPrefixEnvironmentStage() +
+      " " +
+      getPrefixTimestamp() +
+      "LOG - " +
+      body
+  );
 }
 
 export function sendDiscordSentryLog(body: string) {
   console.log(
-    prefixEnvironmentStage() +
+    prefixEnvironmentStageTemplated() +
       " " +
       prefixTimestampTemplated() +
       colors.bg.yellow +
@@ -138,6 +171,27 @@ export function sendDiscordSentryLog(body: string) {
       " " +
       body
   );
+
+  exportToFile(
+    getPrefixEnvironmentStage() +
+      " " +
+      getPrefixTimestamp() +
+      "DISCORD SENTRY LOG - " +
+      body
+    );
+}
+
+function exportToFile(message: string)
+{
+  writeFileSync(
+    "./logs/" +
+      getCurrentFormattedDateFileString() +
+      ".log",
+    message + "\n",
+    {
+      flag: "a+",
+    }
+  )
 }
 
 export default sendInfo;
