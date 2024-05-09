@@ -71,7 +71,7 @@ export function discordSentry(
     });
   });
 
-  sendDiscordSentryLog(`${user.globalName}(${user.id}) | ${channel.toString()}: ${description}`);
+  sendDiscordSentryLog(`${user.globalName}(${user.id}) | [${type}] ${channel.toString()}: ${description}`);
 }
 
 export default sentry;
