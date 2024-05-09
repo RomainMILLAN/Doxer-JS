@@ -101,7 +101,10 @@ services:
       - APP_ENV=PROD
       - APP_DEBUGING=false
       - APP_SENTRY=true
+      - SERVICE_NAME=
       - DISCORD_WEBHOOK_URL=
-      - LINE_NOTIFY_TOKEN=
+      - SIGNAL_API_HOST=
+      - SIGNAL_API_SENDER_NUMBER=
+      - SIGNAL_API_RECEIVER=
     command: node build/index.js
 ```
