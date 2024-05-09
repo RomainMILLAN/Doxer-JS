@@ -20,6 +20,18 @@ export function getCurrentFormattedTimeString() {
   const date = new Date();
   let hour = date.getHours();
   let min = date.getMinutes();
+  let seconds = date.getSeconds();
 
-  return `${hour}:${min}`;
+  return `${hour}:${min}:${seconds}`;
 }
+
+export function getCurrentFormattedDateFileString() {
+  const date = new Date();
+  let day = date.getDate();
+  let month = date.getMonth() + 1;
+  let year = date.getFullYear();
+
+  return `${year}-${month}-${day}`;
+}
+
+export default getFormattedTime;

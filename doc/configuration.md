@@ -59,8 +59,11 @@ La variable d'environnement `TC_DISCORD_SENTRY` indique à Discord Sentry ou les
 Cette variable doit contenir l'identifiant d'un channel texte.
 
 ### Webhook
+`SERVICE_NAME` désigne le nom de votre service pour le monitoring.<br/>
 `DISCORD_WEBHOOK_URL` désigne l'url de la webhook de monitoring.<br/>
-`LINE_NOTIFY_TOKEN` désigne le token de notify pour le monitoring.
+`SIGNAL_API_HOST` désigne le host url de votre api rest signal pour le monitoring.<br/>
+`SIGNAL_API_SENDER_NUMBER` désigne le numéro de départ pour le message signal pour le monitoring.<br/>
+`SIGNAL_API_RECEIVER` désigne le receveur pour le message signal pour le monitoring. (*Cela peut être un numéro, ou un identifiant de groupe.*)<br/>
 
 ### VoiceClick Category
 

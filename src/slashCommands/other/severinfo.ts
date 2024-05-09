@@ -10,9 +10,11 @@ import {
   folderMark,
   userMark,
   vocalMark,
+  whiteCheckMark,
   writeMark,
 } from "../../manager/enum/icon";
 import { slashCommandOpRestriction } from "../../manager/permissionManager";
+import sentry from "../../manager/sentry";
 
 export const command: SlashCommand = {
   name: "serverinfo",
@@ -77,6 +79,14 @@ export const command: SlashCommand = {
       ],
       ephemeral: true,
     });
+
+    sentry(
+      interaction.client,
+      "Server Information",
+      `${whiteCheckMark} Affichage des informations du serveur '${interaction.guild.name}'`,
+      interaction.user,
+      "/serverinfo"
+    );
 
     return;
   },

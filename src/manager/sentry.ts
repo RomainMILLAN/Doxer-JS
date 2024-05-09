@@ -37,9 +37,10 @@ export function sentry(
       c.send({
         embeds: [embed],
       });
-      sendLog(user.globalName + " | " + title + "/" + description);
     });
   });
+
+  sendLog(`${user.globalName}(${user.id}) | ${title}: ${description} (${command})`);
 }
 
 export function discordSentry(
@@ -67,9 +68,10 @@ export function discordSentry(
       c.send({
         embeds: [embed],
       });
-      sendDiscordSentryLog(user.globalName + " | " + description);
     });
   });
+
+  sendDiscordSentryLog(`${user.globalName}(${user.id}) | [${type}] ${channel.toString()}: ${description}`);
 }
 
 export default sentry;
