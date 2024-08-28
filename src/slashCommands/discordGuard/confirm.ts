@@ -50,7 +50,7 @@ export const command: SlashCommand = {
 
     let command: string = `/confirm user:${userSelect.id.toString()} role:${roleSelect.value.toString()}`;
     let nickname: string | null = null;
-    let confirmDescription = `L'utilisateur ${userSelect.toString()} à était confirmer avec le rôle ${
+    let confirmDescription = `L'utilisateur ${userSelect.toString()} a été confirmé avec le rôle ${
       roleSelect.role
     }`;
 
@@ -84,7 +84,7 @@ export const command: SlashCommand = {
       sentry(
         interaction.client,
         `DiscordGuard/Confirm`,
-        `${xMark} Confirmation d'un utilisateur déjà confirmer impossible (\`${userSelect.id.toString()}\` | \`${
+        `${xMark} Confirmation d'un utilisateur déjà confirmé impossible (\`${userSelect.id.toString()}\` | \`${
           roleSelect.role.name
         }\`)`,
         user,
