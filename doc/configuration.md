@@ -48,6 +48,10 @@ La variable d'environnement `R_OP` est le role opérateur qui aura toutes les pe
 
 La variable d'environnement `R_STAFF` est le role staff qui aura quelques permissions sur le bot discord.
 
+### Memer Role🏷️
+
+La variable d'environnement `R_MEMBER` est le role membre qui sera automatiquement ajoutée lors de l'execution de la commande /confirm si celle-ci est remplie.
+
 
 *A partir d'ici les clefs de configuration sont optionnelles*
 ### Channel Sentry
