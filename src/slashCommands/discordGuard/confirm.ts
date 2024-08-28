@@ -6,6 +6,7 @@ import {
   User,
   GuildMember,
   PermissionsBitField,
+  Role,
 } from "discord.js";
 import { SlashCommand } from "../../../types";
 import { sentry } from "../../manager/sentry";
@@ -91,6 +92,12 @@ export const command: SlashCommand = {
       );
 
       return;
+    }
+
+    if(process.env.R_MEMBER !== "") {
+      (userSelect.roles as GuildMemberRoleManager).add(
+        process.env.R_MEMBER
+      );
     }
 
     (userSelect.roles as GuildMemberRoleManager).add(
