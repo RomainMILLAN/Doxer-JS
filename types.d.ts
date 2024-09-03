@@ -13,6 +13,7 @@ declare global {
       GUILD_ID: string;
       R_OP: string;
       R_STAFF: string;
+      R_MEMBER: string;
       TC_SENTRY: string;
       TC_DISCORD_SENTRY: string;
       VC_CATEGORY: string;
@@ -20,6 +21,8 @@ declare global {
       WEATHER_DEFAULT_CITY: string;
       DISCORD_SENTRY_BLACKLIST: string;
       C_TICKET: string;
+      W_SSID: string;
+      W_PASSWORD: string;
 
       APP_ENV: string;
       APP_DEBUGING: string;
