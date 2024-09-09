@@ -23,3 +23,16 @@ dev: build
 ## —— Configuration 📝 ————————————————————————————————————————————————————————————————
 .env: ## Setup env file
 	@cp .env.dist .env
+
+##
+## —— Déploiement 🚀 ————————————————————————————————————————————————————————————————
+deploy-botasete:	## Deploy on prod
+deploy-botasete:
+	@echo "🚩 Deploying to production server (prod)"
+	@ssh -A prod 'cd /opt/stacks/botasete && git pull origin main && make deploy ENV=prod'
+
+deploy: vendor-build build
+	@echo "Stopping project"
+	@$(DC) down
+	@echo "Rebooting project"
+	@$(DC) up -d --build
