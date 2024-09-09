@@ -76,7 +76,7 @@ export const command: SlashCommand = {
       return;
     }
 
-    const openWeatherMapApiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=celsus&appid=${process.env.OPEN_WEATHER_API}&lang=fr`;
+    const openWeatherMapApiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${process.env.OPEN_WEATHER_API}&lang=fr`;
 
     let response;
 
