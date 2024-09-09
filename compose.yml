@@ -1,0 +1,12 @@
+services:
+  ts-node-docker:
+    container_name: doxerjs
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: base
+    env_file:
+      - .env
+    environment:
+      - TZ=Europe/Paris
+networks: {}
