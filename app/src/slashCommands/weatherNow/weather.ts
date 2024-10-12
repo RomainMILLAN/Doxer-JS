@@ -21,7 +21,6 @@ export const command: SlashCommand = {
   data: new SlashCommandBuilder()
     .setName("weather")
     .setDescription("Visualisez la météo")
-    .setDMPermission(true)
     .addStringOption((option) =>
       option.setName("city").setDescription("La ville").setRequired(false)
     ),

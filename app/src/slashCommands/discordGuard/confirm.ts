@@ -21,7 +21,6 @@ export const command: SlashCommand = {
   data: new SlashCommandBuilder()
     .setName("confirm")
     .setDescription("Confirmer un utilisateur")
-    .setDMPermission(false)
     .setDefaultMemberPermissions(PermissionsBitField.Flags.ModerateMembers)
     .addUserOption((option) =>
       option

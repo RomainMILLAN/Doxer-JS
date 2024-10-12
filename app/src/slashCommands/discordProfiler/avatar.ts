@@ -8,7 +8,6 @@ export const command: SlashCommand = {
   data: new SlashCommandBuilder()
     .setName("avatar")
     .setDescription("Affiche l'avatar d'un utilisateur")
-    .setDMPermission(true)
     .addUserOption((option) =>
       option.setName("user").setDescription("Utilisateur").setRequired(true)
     ),
