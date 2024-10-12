@@ -1,7 +1,4 @@
 import {
-  ActionRowBuilder,
-  ButtonBuilder,
-  ButtonStyle,
   EmbedBuilder,
   SlashCommandBuilder,
 } from "discord.js";
@@ -13,8 +10,7 @@ export const command: SlashCommand = {
   name: "wifi",
   data: new SlashCommandBuilder()
     .setName("wifi")
-    .setDescription("Affiche les informations du wifi")
-    .setDMPermission(true),
+    .setDescription("Affiche les informations du wifi"),
   execute: async (interaction) => {
     interaction.reply({
       embeds: [

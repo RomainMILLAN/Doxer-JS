@@ -6,22 +6,22 @@ import {
   User,
   GuildMember,
   PermissionsBitField,
-  Role,
 } from "discord.js";
 import { SlashCommand } from "../../../types";
 import { sentry } from "../../manager/sentry";
 import { whiteCheckMark, xMark } from "../../manager/enum/icon";
 import {
+  isMember,
   isMemberStaff,
   slashCommandStaffRestriction,
 } from "../../manager/permissionManager";
+import { isConfigure } from "../../manager/configurationManager";
 
 export const command: SlashCommand = {
   name: "confirm",
   data: new SlashCommandBuilder()
     .setName("confirm")
     .setDescription("Confirmer un utilisateur")
-    .setDMPermission(false)
     .setDefaultMemberPermissions(PermissionsBitField.Flags.ModerateMembers)
     .addUserOption((option) =>
       option
@@ -69,7 +69,7 @@ export const command: SlashCommand = {
       return;
     }
 
-    if (memberCannotConfirmed(userSelect)) {
+    if (isMemberCannotConfirmed(userSelect)) {
       interaction.reply({
         embeds: [
           new EmbedBuilder()
@@ -94,7 +94,7 @@ export const command: SlashCommand = {
       return;
     }
 
-    if(process.env.R_MEMBER !== "") {
+    if(isConfigure(process.env.R_MEMBER)) {
       (userSelect.roles as GuildMemberRoleManager).add(
         process.env.R_MEMBER
       );
@@ -104,7 +104,7 @@ export const command: SlashCommand = {
       roleSelect.value.toString()
     );
 
-    if (undefined !== nickname) {
+    if (null !== nickname) {
       userSelect.setNickname(nickname);
       confirmDescription += ` et le pseudo \`${nickname}\``;
     }
@@ -135,6 +135,6 @@ export const command: SlashCommand = {
  * @param member member to check
  * @returns boolean true (member can't confirm) | false (member is confirmable)
  */
-function memberCannotConfirmed(member: GuildMember): boolean {
-  return isMemberStaff(member);
+function isMemberCannotConfirmed(member: GuildMember): boolean {
+  return isMember(member) || isMemberStaff(member);
 }

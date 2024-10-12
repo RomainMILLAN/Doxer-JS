@@ -4,7 +4,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      target: base or production
     environment:
       - TZ=Europe/Paris
       - APP_ENV=

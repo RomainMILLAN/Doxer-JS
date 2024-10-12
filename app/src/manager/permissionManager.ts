@@ -7,6 +7,10 @@ import sentry from "./sentry";
 import { xMark } from "./enum/icon";
 import { restrictionMemberEmbed } from "./embedBuilder";
 
+export function isMember(member: GuildMember): boolean {
+  return (member.roles as GuildMemberRoleManager).cache.has(process.env.R_MEMBER);
+}
+
 export function isMemberOp(member: GuildMember): boolean {
   return (member.roles as GuildMemberRoleManager).cache.has(process.env.R_OP);
 }

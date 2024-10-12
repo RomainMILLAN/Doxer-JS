@@ -12,12 +12,11 @@ export const command: SlashCommand = {
   data: new SlashCommandBuilder()
     .setName("profil")
     .setDescription("Affiche le profile d'un utilisateur")
-    .setDMPermission(true)
     .addUserOption((option) =>
       option.setName("user").setDescription("Utilisateur").setRequired(true)
     ),
   execute: async (interaction) => {
-    const user = interaction.options.getUser(`user`);
+    const user = interaction.options.get('user')?.user;
 
     if (!user) {
       interaction.reply({

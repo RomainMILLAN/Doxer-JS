@@ -3,14 +3,12 @@ import { SlashCommand } from "../../../types";
 import { EmbedBuilder } from "@discordjs/builders";
 import { createTicket } from "../../manager/ticketManager";
 import { labelMark } from "../../manager/enum/icon";
-import { sendDebug } from "../../manager/consoleManager";
 
 export const command: SlashCommand = {
   name: "ticket",
   data: new SlashCommandBuilder()
     .setName("ticket")
-    .setDescription("Créer un ticket")
-    .setDMPermission(false),
+    .setDescription("Créer un ticket"),
   execute: async (interaction) => {
     const response = await interaction.reply({
       embeds: [
