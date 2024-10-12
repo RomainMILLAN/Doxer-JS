@@ -12,7 +12,7 @@ export const command: SlashCommand = {
       option.setName("user").setDescription("Utilisateur").setRequired(true)
     ),
   execute: async (interaction) => {
-    const user = interaction.options.getUser("user");
+    const user = interaction.options.get('user')?.user;
 
     if (!user) {
       interaction.reply({
