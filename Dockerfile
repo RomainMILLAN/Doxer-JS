@@ -1,4 +1,4 @@
-FROM node:20 as base
+FROM node:23 as base
 
 ENV TZ=Europe/Paris
 ENV NODE_PATH=./build
