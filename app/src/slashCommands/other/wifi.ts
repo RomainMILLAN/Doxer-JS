@@ -29,7 +29,6 @@ export const command: SlashCommand = {
               `${process.env.W_PASSWORD}`,
           }),
       ],
-      ephemeral: true,
     });
 
     sentry(
