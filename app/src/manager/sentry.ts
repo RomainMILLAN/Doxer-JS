@@ -48,14 +48,14 @@ export function discordSentry(
   channel: Channel,
   type: string,
   description: string,
-  user: User
+  user: User,
 ) {
   if (!isConfigure(process.env.TC_SENTRY) || !isSentryEnabled()) return;
 
   client.guilds.fetch(process.env.GUILD_ID).then((r) => {
     r.channels.fetch(process.env.TC_DISCORD_SENTRY).then((c: TextChannel) => {
       var embed = new EmbedBuilder()
-        .setTitle(`${writeMark} DISCORD SENTRY/Message`)
+        .setTitle(`${writeMark} DISCORD SENTRY/${type.toUpperCase()}`)
         .setDescription(
           `${type} - ${user.toString()}\n > ${channel.toString()}\n > ${description}`
         )

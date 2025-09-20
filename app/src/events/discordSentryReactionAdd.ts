@@ -1,22 +1,27 @@
-import { Events, Message } from "discord.js";
+import { Events, Message, MessageReaction, User } from "discord.js";
 import { BotEvent } from "../../types";
 import { discordSentry } from "../manager/sentry";
 import isDiscordSentryBlacklisted from "../manager/discordSentryManager";
 import { isConfigureEnabled } from "../manager/configurationManager";
 
 const event: BotEvent = {
-  name: "discordSentrySendMessage",
-  type: Events.MessageCreate,
-  async execute(message: Message) {
+  name: "discordSentryReactionAdd",
+  type: Events.MessageReactionAdd,
+  async execute(reaction: MessageReaction, user: User) {
     if (!isConfigureEnabled(process.env.APP_SENTRY)) {
       return;
     }
 
-    if (message.partial) message = await message.fetch();
+    if (reaction.partial) {
+			reaction = await reaction.fetch();
+		}
 
-    if (message.author.bot) {
-      return;
+    if (reaction.message.partial) {
+      await reaction.message.fetch();
     }
+
+    //@ts-ignore
+    const message: Message = reaction.message;
 
     if (isDiscordSentryBlacklisted(message.channel.id)) {
       return;
@@ -25,9 +30,9 @@ const event: BotEvent = {
     discordSentry(
       message.client,
       message.channel,
-      "New message",
-      message.content,
-      message.member.user
+      "New reaction",
+      `Message : \`${message.content}\`\n > Reaction : \`${reaction.emoji}\``,
+      user,
     );
   },
 };

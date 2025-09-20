@@ -3,6 +3,7 @@ import {
   Client,
   Collection,
   GatewayIntentBits,
+  Partials,
 } from "discord.js";
 import { readdirSync } from "fs";
 import { join } from "path";
@@ -22,6 +23,11 @@ const client = new Client({
     GatewayIntentBits.GuildMessageTyping,
     GatewayIntentBits.GuildMessageReactions,
     GatewayIntentBits.GuildMembers,
+  ],
+  partials: [
+    Partials.Message,
+    Partials.Channel,
+    Partials.Reaction,
   ],
   presence: {
     status: "online",

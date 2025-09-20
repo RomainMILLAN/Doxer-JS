@@ -11,10 +11,6 @@ const event: BotEvent = {
       return;
     }
 
-    if (message.author.bot) {
-      return;
-    }
-
     discordSentry(
       message.client,
       message.channel,
