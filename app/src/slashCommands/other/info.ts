@@ -9,6 +9,7 @@ import {
 import { SlashCommand } from "../../../types";
 import { sentry } from "../../manager/sentry";
 import { linkMark, robotMark, whiteCheckMark } from "../../manager/enum/icon";
+import { APP_VERSION } from "../../version";
 
 export const command: SlashCommand = {
   name: "info",
@@ -19,7 +20,7 @@ export const command: SlashCommand = {
     await interaction.reply({
       embeds: [
         new EmbedBuilder()
-          .setTitle(`${robotMark} Doxer JS`)
+          .setTitle(`${robotMark} Doxer JS v${APP_VERSION}`)
           .setDescription(
             `Bot développer par [Romain MILLAN](https://romainmillan.fr).\nCe bot permet l'utilisation de commande pour simplifier la configuration et la modération sur des serveurs discords`
           )

@@ -2,6 +2,7 @@ import { colors, sendDebug } from "./consoleManager";
 import { statisticMark, whiteCheckMark } from "./enum/icon";
 import { DiscordNotify } from "./notifier/DiscordNotify";
 import { SignalNotify } from "./notifier/SignalNotify";
+import { APP_VERSION } from "../version";
 
 export async function sendUptime() {
   if (process.env.APP_ENV === `DEV`) return;
@@ -12,7 +13,7 @@ export async function sendUptime() {
 
 function sendSignalUptime() {
   const signalNotify = new SignalNotify();
-  const message = `✅ ${process.env.SERVICE_NAME}(DoxerJS) connecté`;
+  const message = `✅ ${process.env.SERVICE_NAME}(DoxerJS v${APP_VERSION}) connecté`;
 
   signalNotify.send(message);
   sendDebug(`Uptime: ${colors.underscore}Signal${colors.reset} notify send`);
@@ -32,7 +33,7 @@ async function sendDiscordUptime() {
           },
           {
             name: `Project name`,
-            value: `Doxer JS`,
+            value: `Doxer JS v${APP_VERSION}`,
           },
           {
             name: `State`,

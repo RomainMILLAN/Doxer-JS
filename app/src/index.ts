@@ -10,6 +10,7 @@ import { join } from "path";
 import { SlashCommand } from "../types";
 import { discordSentryBlacklistInitialize } from "./manager/discordSentryManager";
 import initConfiguration from "./manager/configurationManager";
+import { APP_VERSION } from "./version";
 
 initConfiguration();
 
@@ -33,7 +34,7 @@ const client = new Client({
     status: "online",
     activities: [
       {
-        name: "/info",
+        name: `v${APP_VERSION} - /info`,
         type: ActivityType.Watching,
       },
     ],
