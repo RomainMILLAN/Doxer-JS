@@ -15,7 +15,7 @@ export const command: SlashCommand = {
     const user = interaction.options.get('user')?.user;
 
     if (!user) {
-      interaction.reply({
+      await interaction.reply({
         embeds: [
           new EmbedBuilder()
             .setTitle(`${interdictionMark} Utilisateur non trouvée`)
@@ -38,7 +38,7 @@ export const command: SlashCommand = {
 
     const avatarUrl = user.avatarURL() ?? user.defaultAvatarURL;
 
-    interaction.reply({
+    await interaction.reply({
       embeds: [
         new EmbedBuilder()
           .setTitle(`${windowMark} Avatar de ${user.displayName}`)

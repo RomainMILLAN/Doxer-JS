@@ -1,5 +1,5 @@
-import { Channel, Client, EmbedBuilder, TextChannel, User } from "discord.js";
-import { sendDiscordSentryLog, sendLog } from "./consoleManager";
+import { Channel, Client, EmbedBuilder, User } from "discord.js";
+import { sendDiscordSentryLog, sendError, sendLog } from "./consoleManager";
 import {
   getCurrentFormattedDateString,
   getCurrentFormattedTimeString,
@@ -7,7 +7,7 @@ import {
 import { isConfigure, isSentryEnabled } from "./configurationManager";
 import { writeMark } from "./enum/icon";
 
-export function sentry(
+export async function sentry(
   client: Client,
   title: string,
   description: string,
@@ -16,35 +16,36 @@ export function sentry(
 ) {
   if (!isConfigure(process.env.TC_SENTRY) || !isSentryEnabled()) return;
 
-  client.guilds.fetch(process.env.GUILD_ID).then((r) => {
-    r.channels.fetch(process.env.TC_SENTRY).then((c) => {
-      if (!c?.isTextBased()) return;
-      const embed = new EmbedBuilder()
-        .setTitle(`${writeMark} SENTRY/${title}`)
-        .setDescription(`${title} - ${user.toString()}\n > ${description}`)
-        .setColor("Orange")
-        .setFooter({
-          text: `Le ${getCurrentFormattedDateString()} à ${getCurrentFormattedTimeString()}`,
-        })
-        .setTimestamp();
+  try {
+    const guild = await client.guilds.fetch(process.env.GUILD_ID);
+    const c = await guild.channels.fetch(process.env.TC_SENTRY);
+    if (!c?.isTextBased()) return;
 
-      if (null !== command) {
-        embed.addFields({
-          name: "Commande",
-          value: `\`${command}\``,
-        });
-      }
+    const embed = new EmbedBuilder()
+      .setTitle(`${writeMark} SENTRY/${title}`)
+      .setDescription(`${title} - ${user.toString()}\n > ${description}`)
+      .setColor("Orange")
+      .setFooter({
+        text: `Le ${getCurrentFormattedDateString()} à ${getCurrentFormattedTimeString()}`,
+      })
+      .setTimestamp();
 
-      c.send({
-        embeds: [embed],
+    if (null !== command) {
+      embed.addFields({
+        name: "Commande",
+        value: `\`${command}\``,
       });
-    });
-  });
+    }
+
+    await c.send({ embeds: [embed] });
+  } catch (e) {
+    sendError(`Sentry error: ${e}`);
+  }
 
   sendLog(`${user.globalName}(${user.id}) | ${title}: ${description} (${command})`);
 }
 
-export function discordSentry(
+export async function discordSentry(
   client: Client,
   channel: Channel,
   type: string,
@@ -55,25 +56,26 @@ export function discordSentry(
 
   const userDisplay = user ? user.toString() : "Inconnu";
 
-  client.guilds.fetch(process.env.GUILD_ID).then((r) => {
-    r.channels.fetch(process.env.TC_DISCORD_SENTRY).then((c) => {
-      if (!c?.isTextBased()) return;
-      const embed = new EmbedBuilder()
-        .setTitle(`${writeMark} DISCORD SENTRY/${type.toUpperCase()}`)
-        .setDescription(
-          `${type} - ${userDisplay}\n > ${channel.toString()}\n > ${description}`
-        )
-        .setColor("Orange")
-        .setFooter({
-          text: `Le ${getCurrentFormattedDateString()} à ${getCurrentFormattedTimeString()}`,
-        })
-        .setTimestamp();
+  try {
+    const guild = await client.guilds.fetch(process.env.GUILD_ID);
+    const c = await guild.channels.fetch(process.env.TC_DISCORD_SENTRY);
+    if (!c?.isTextBased()) return;
 
-      c.send({
-        embeds: [embed],
-      });
-    });
-  });
+    const embed = new EmbedBuilder()
+      .setTitle(`${writeMark} DISCORD SENTRY/${type.toUpperCase()}`)
+      .setDescription(
+        `${type} - ${userDisplay}\n > ${channel.toString()}\n > ${description}`
+      )
+      .setColor("Orange")
+      .setFooter({
+        text: `Le ${getCurrentFormattedDateString()} à ${getCurrentFormattedTimeString()}`,
+      })
+      .setTimestamp();
+
+    await c.send({ embeds: [embed] });
+  } catch (e) {
+    sendError(`Discord sentry error: ${e}`);
+  }
 
   const userLog = user ? `${user.globalName}(${user.id})` : "Inconnu";
   sendDiscordSentryLog(`${userLog} | [${type}] ${channel.toString()}: ${description}`);

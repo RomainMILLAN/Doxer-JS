@@ -1,10 +1,8 @@
-FROM node:23 as base
+FROM node:23-slim AS base
 
 ENV TZ=Europe/Paris
-ENV NODE_PATH=./build
-RUN apt-get update && apt-get install -y git nano
 
-RUN mkdir -p /home/node/app
+RUN mkdir -p /home/node/app/logs
 WORKDIR /home/node/app
 COPY ./app /home/node/app
 

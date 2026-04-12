@@ -10,7 +10,7 @@ const event: BotEvent = {
   execute(client: Client) {
     sendUptime();
     sendInfo(
-      `Client ready '${colors.bright}${client.user.tag}${colors.reset}' in mode ${colors.bright}${process.env.APP_ENV}${colors.reset}`
+      `Client ready '${colors.bright}${client.user?.tag ?? 'Unknown'}${colors.reset}' in mode ${colors.bright}${process.env.APP_ENV}${colors.reset}`
     );
   },
 };

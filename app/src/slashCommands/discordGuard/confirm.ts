@@ -43,34 +43,50 @@ export const command: SlashCommand = {
     ),
   execute: async (interaction) => {
     const user: User = interaction.user;
-    const userSelect: GuildMember = interaction.guild.members.cache.get(
-      interaction.options.get("user").value.toString()
-    );
-    const roleSelect: any = interaction.options.get("role");
-
-    let command: string = `/confirm user:${userSelect.id.toString()} role:${roleSelect.value.toString()}`;
-    let nickname: string | null = null;
-    let confirmDescription = `L'utilisateur ${userSelect.toString()} a été confirmé avec le rôle ${
-      roleSelect.role
-    }`;
-
-    if (null !== interaction.options.get("nickname")) {
-      nickname = interaction.options.get("nickname").value.toString();
-      command += ` nickname:${nickname.toString()}`;
-    }
 
     if (
       !slashCommandStaffRestriction(
         interaction,
-        command,
+        `/confirm`,
         "DiscordGuard/Confirm"
       )
     ) {
       return;
     }
 
+    const userId = interaction.options.get("user")?.value?.toString() ?? "";
+    const userSelect = interaction.guild?.members.cache.get(userId)
+      ?? await interaction.guild?.members.fetch(userId).catch(() => null) ?? null;
+
+    if (!userSelect) {
+      await interaction.reply({
+        embeds: [
+          new EmbedBuilder()
+            .setTitle(`${xMark} Confirmation d'utilisateur`)
+            .setDescription(`L'utilisateur n'a pas été trouvé.`)
+            .setColor(Colors.Red),
+        ],
+        ephemeral: true,
+      });
+      return;
+    }
+
+    const roleSelect = interaction.options.get("role");
+
+    let command: string = `/confirm user:${userSelect.id.toString()} role:${roleSelect?.value?.toString()}`;
+    let nickname: string | null = null;
+    let confirmDescription = `L'utilisateur ${userSelect.toString()} a été confirmé avec le rôle ${
+      roleSelect?.role
+    }`;
+
+    const nicknameOption = interaction.options.get("nickname");
+    if (nicknameOption?.value) {
+      nickname = nicknameOption.value.toString();
+      command += ` nickname:${nickname}`;
+    }
+
     if (isMemberCannotConfirmed(userSelect)) {
-      interaction.reply({
+      await interaction.reply({
         embeds: [
           new EmbedBuilder()
             .setTitle(`${xMark} Confirmation d'utilisateur`)
@@ -85,7 +101,7 @@ export const command: SlashCommand = {
         interaction.client,
         `DiscordGuard/Confirm`,
         `${xMark} Confirmation d'un utilisateur déjà confirmé impossible (\`${userSelect.id.toString()}\` | \`${
-          roleSelect.role.name
+          roleSelect?.role?.name ?? "unknown"
         }\`)`,
         user,
         command
@@ -100,16 +116,18 @@ export const command: SlashCommand = {
       );
     }
 
-    (userSelect.roles as GuildMemberRoleManager).add(
-      roleSelect.value.toString()
-    );
+    if (roleSelect?.value) {
+      (userSelect.roles as GuildMemberRoleManager).add(
+        roleSelect.value.toString()
+      );
+    }
 
     if (null !== nickname) {
       userSelect.setNickname(nickname);
       confirmDescription += ` et le pseudo \`${nickname}\``;
     }
 
-    interaction.reply({
+    await interaction.reply({
       embeds: [
         new EmbedBuilder()
           .setTitle(`Confirmation d'utilisateur`)
@@ -123,7 +141,7 @@ export const command: SlashCommand = {
       `DiscordGuard/Confirm`,
       whiteCheckMark +
         ` Confirmation d'utilisateur (\`${userSelect.id.toString()}\` | \`${
-          roleSelect.role.name
+          roleSelect?.role?.name ?? "unknown"
         }\`)`,
       user,
       command

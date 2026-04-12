@@ -111,7 +111,7 @@ export function sendDebug(body: string) {
 }
 
 export function sendError(body: string) {
-  console.log(
+  console.error(
     prefixEnvironmentStageTemplated() +
       " " +
       prefixTimestampTemplated() +

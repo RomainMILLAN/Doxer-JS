@@ -63,31 +63,12 @@ export function slashCommandOpRestriction(
   return false;
 }
 
-/**
- * @param interaction interaction to check
- * @param command command to send to sentry if not authorized
- * @param title title of sentry if not authorized
- * @returns boolean true (authorized) | false (not authorized)
- */
-export function isRestrictedOP(
+async function slashCommandNotAuthorized(
   interaction: CommandInteraction,
   command: string,
   title: string
 ) {
-  if (isMemberOp(interaction.member as GuildMember)) {
-    return true;
-  }
-
-  slashCommandNotAuthorized(interaction, command, title);
-  return false;
-}
-
-function slashCommandNotAuthorized(
-  interaction: CommandInteraction,
-  command: string,
-  title: string
-) {
-  interaction.reply({
+  await interaction.reply({
     embeds: [restrictionMemberEmbed()],
     ephemeral: true,
   });

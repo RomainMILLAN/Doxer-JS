@@ -27,7 +27,7 @@ const event: BotEvent = {
       message.channel,
       "New message",
       message.content,
-      message.member.user
+      message.member?.user ?? message.author ?? null
     );
   },
 };

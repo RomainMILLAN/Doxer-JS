@@ -1,11 +1,20 @@
 import * as dotenv from "dotenv";
+import { mkdirSync } from "fs";
 import { colors, sendDebug, sendError } from "./consoleManager";
 import { kill } from "process";
 
 export function initConfiguration() {
   dotenv.config();
+  mkdirSync("./logs", { recursive: true });
 
   sendDebug("Starting in " + process.env.APP_ENV + " mode.");
+
+  const requiredEnvVars = ["APP_ID", "BOT_TOKEN", "GUILD_ID", "APP_ENV"];
+  const missing = requiredEnvVars.filter((key) => !process.env[key]);
+  if (missing.length > 0) {
+    sendError(`Missing required environment variables: ${missing.join(", ")}`);
+    kill(process.pid, "SIGTERM");
+  }
 
   if (
     process.env.APP_ENV != "PROD" &&

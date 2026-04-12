@@ -58,7 +58,7 @@ services:
       - R_STAFF=
       - TC_SENTRY=
       - TC_DISCORD_SENTRY=
-      - VC_CATEGORY=
+
       - OPEN_WEATHER_API=
       - WEATHER_DEFAULT_CITY=
       - DISCORD_SENTRY_BLACKLIST=
@@ -94,7 +94,7 @@ services:
       - R_STAFF=
       - TC_SENTRY=
       - TC_DISCORD_SENTRY=
-      - VC_CATEGORY=
+
       - OPEN_WEATHER_API=
       - WEATHER_DEFAULT_CITY=
       - DISCORD_SENTRY_BLACKLIST=

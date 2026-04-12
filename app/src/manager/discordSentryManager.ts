@@ -9,13 +9,13 @@ export function discordSentryBlacklistInitialize() {
   }
 
   const blacklistInString = process.env.DISCORD_SENTRY_BLACKLIST;
-  channelBlacklist = blacklistInString.split(",");
+  channelBlacklist = blacklistInString.split(",").map((id) => id.trim());
   sendDebug("DiscordSentry channel(s) blacklist: " + channelBlacklist);
 }
 
 export function isDiscordSentryBlacklisted(channelId: string): boolean {
   if (!isConfigure(process.env.DISCORD_SENTRY_BLACKLIST)) {
-    return;
+    return false;
   }
 
   return channelBlacklist.includes(channelId.toLocaleLowerCase());

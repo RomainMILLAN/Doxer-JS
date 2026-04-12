@@ -24,7 +24,7 @@ async function sendDiscordUptime() {
     embeds: [
       {
         title: `${statisticMark} Service connexion`,
-        color: `65280`,
+        color: 0x00FF00,
         fields: [
           {
             name: `Service name`,

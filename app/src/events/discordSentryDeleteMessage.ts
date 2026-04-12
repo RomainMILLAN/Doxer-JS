@@ -1,6 +1,7 @@
 import { Events, Message } from "discord.js";
 import { BotEvent } from "../../types";
 import { discordSentry } from "../manager/sentry";
+import isDiscordSentryBlacklisted from "../manager/discordSentryManager";
 import { isConfigureEnabled } from "../manager/configurationManager";
 
 const event: BotEvent = {
@@ -17,6 +18,10 @@ const event: BotEvent = {
       } catch {
         return;
       }
+    }
+
+    if (isDiscordSentryBlacklisted(message.channel.id)) {
+      return;
     }
 
     discordSentry(

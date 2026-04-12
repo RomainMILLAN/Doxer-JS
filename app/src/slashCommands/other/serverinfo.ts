@@ -4,7 +4,7 @@ import {
   SlashCommandBuilder,
 } from "discord.js";
 import { SlashCommand } from "../../../types";
-import { EmbedBuilder } from "@discordjs/builders";
+import { EmbedBuilder } from "discord.js";
 import {
   crownMark,
   folderMark,
@@ -26,53 +26,56 @@ export const command: SlashCommand = {
     if (!slashCommandOpRestriction(interaction, `/serverinfo`, `ServerInfo`))
       return;
 
-    interaction.reply({
+    const guild = interaction.guild;
+    if (!guild) return;
+
+    await interaction.reply({
       embeds: [
         new EmbedBuilder()
           .setAuthor({
-            name: interaction.guild.name,
-            iconURL: interaction.guild.iconURL({ size: 256 }),
+            name: guild.name,
+            iconURL: guild.iconURL({ size: 256 }) ?? undefined,
           })
           .addFields(
             {
               name: `${crownMark} Fondateur`,
-              value: (await interaction.guild.fetchOwner()).user.tag,
+              value: (await guild.fetchOwner()).user.tag,
               inline: true,
             },
             {
               name: `${userMark} Nombre de membres`,
-              value: interaction.guild.memberCount.toString(),
+              value: guild.memberCount.toString(),
               inline: true,
             },
             {
               name: `${writeMark} Nombre de salons textuels`,
-              value: interaction.guild.channels.cache
+              value: guild.channels.cache
                 .filter((channel) => channel.type === ChannelType.GuildText)
                 .size.toString(),
               inline: true,
             },
             {
               name: `${vocalMark} Nombre de salons vocaux`,
-              value: interaction.guild.channels.cache
+              value: guild.channels.cache
                 .filter((channel) => channel.type === ChannelType.GuildVoice)
                 .size.toString(),
               inline: true,
             },
             {
               name: `${folderMark} Nombre de categories`,
-              value: interaction.guild.channels.cache
+              value: guild.channels.cache
                 .filter((channel) => channel.type === ChannelType.GuildCategory)
                 .size.toString(),
               inline: true,
             },
             {
               name: `${userMark} Roles`,
-              value: interaction.guild.roles.cache.size.toString(),
+              value: guild.roles.cache.size.toString(),
               inline: true,
             },
             {
               name: `${userMark} Liste des rôles`,
-              value: interaction.guild.roles.cache.toJSON().join(", "),
+              value: guild.roles.cache.toJSON().join(", "),
             }
           ),
       ],
@@ -82,7 +85,7 @@ export const command: SlashCommand = {
     sentry(
       interaction.client,
       "Server Information",
-      `${whiteCheckMark} Affichage des informations du serveur '${interaction.guild.name}'`,
+      `${whiteCheckMark} Affichage des informations du serveur '${guild.name}'`,
       interaction.user,
       "/serverinfo"
     );

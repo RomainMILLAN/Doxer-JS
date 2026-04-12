@@ -1,6 +1,7 @@
 import { Events, Message } from "discord.js";
 import { BotEvent } from "../../types";
 import { discordSentry } from "../manager/sentry";
+import isDiscordSentryBlacklisted from "../manager/discordSentryManager";
 import { isConfigureEnabled } from "../manager/configurationManager";
 
 const event: BotEvent = {
@@ -10,11 +11,15 @@ const event: BotEvent = {
     if (!isConfigureEnabled(process.env.APP_SENTRY)) {
       return;
     }
-    
+
     if (oldMessage.partial) oldMessage = await oldMessage.fetch();
     if (newMessage.partial) newMessage = await newMessage.fetch();
 
     if (newMessage.author.bot || !newMessage.editedAt) {
+      return;
+    }
+
+    if (isDiscordSentryBlacklisted(newMessage.channel.id)) {
       return;
     }
 
@@ -23,7 +28,7 @@ const event: BotEvent = {
       newMessage.channel,
       "Update message",
       `${oldMessage.content} => ${newMessage.content}`,
-      newMessage.member.user
+      newMessage.member?.user ?? newMessage.author ?? null
     );
   },
 };

@@ -19,7 +19,7 @@ export const command: SlashCommand = {
     const user = interaction.options.get('user')?.user;
 
     if (!user) {
-      interaction.reply({
+      await interaction.reply({
         embeds: [
           new EmbedBuilder()
             .setTitle(`${interdictionMark} Utilisateur non trouvée`)
@@ -40,7 +40,7 @@ export const command: SlashCommand = {
       return;
     }
 
-    interaction.reply({
+    await interaction.reply({
       embeds: [
         new EmbedBuilder()
           .setTitle(`:jigsaw: Profile de ${user.displayName}`)
@@ -52,11 +52,11 @@ export const command: SlashCommand = {
             },
             {
               name: `__Nom:__`,
-              value: `\`${user.globalName.toString()}\``,
+              value: `\`${user.globalName ?? user.username}\``,
             },
             {
               name: `__URL de l\'avatar:__`,
-              value: `${user.avatarURL()}`,
+              value: `${user.avatarURL() ?? user.defaultAvatarURL}`,
             },
             {
               name: `__Couleur Hexadecimal:__`,
@@ -72,7 +72,7 @@ export const command: SlashCommand = {
 
     sentry(
       interaction.client,
-      `DiscordProfiler/Avatar`,
+      `DiscordProfiler/Profil`,
       whiteCheckMark + ` Visualisation du profil de ${user.displayName}`,
       interaction.user,
       `/profil user:${user.globalName}`

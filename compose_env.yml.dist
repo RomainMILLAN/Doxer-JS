@@ -19,7 +19,6 @@ services:
       - TC_DISCORD_SENTRY=
       - W_SSID=
       - W_PASSWORD=
-      - VC_CATEGORY=
       - OPEN_WEATHER_API=
       - WEATHER_DEFAULT_CITY=
       - DISCORD_SENTRY_BLACKLIST=

@@ -3,9 +3,9 @@ import {
   ButtonBuilder,
   ButtonStyle,
   Colors,
+  ComponentType,
   EmbedBuilder,
   Guild,
-  Message,
   TextChannel,
   User,
 } from "discord.js";
@@ -25,17 +25,12 @@ export async function createTicket(user: User, guild: Guild): Promise<boolean> {
   try {
     const ticketChannel = await createTicketChannelText(user, guild);
 
-    if(ticketChannel === null) {
+    if (ticketChannel === null) {
       sendError("La configuration pour les tickets n'est pas configurée. (C_TICKET)");
       return false;
     }
 
-    const firstMessageTicket = await sendFirstMessageOfTicketChannel(
-      ticketChannel,
-      user
-    );
-
-    actionTicketButton(firstMessageTicket, user, ticketChannel);
+    await sendFirstMessageOfTicketChannel(ticketChannel, user);
 
     return true;
   } catch (error) {
@@ -50,7 +45,14 @@ export async function createTicket(user: User, guild: Guild): Promise<boolean> {
 async function sendFirstMessageOfTicketChannel(
   ticketChannel: TextChannel,
   user: User
-): Promise<Message<boolean>> {
+) {
+  const closeTicket = new ButtonBuilder()
+    .setCustomId("ticketDelete")
+    .setLabel(`${xMark} Suppression du ticket`)
+    .setStyle(ButtonStyle.Danger);
+
+  const row = new ActionRowBuilder<ButtonBuilder>().addComponents(closeTicket);
+
   const newTicketMessage = await ticketChannel.send({
     embeds: [
       new EmbedBuilder()
@@ -67,7 +69,7 @@ async function sendFirstMessageOfTicketChannel(
         })
         .setTimestamp(),
     ],
-    components: [createTicketButton()],
+    components: [row],
   });
 
   sentry(
@@ -78,45 +80,21 @@ async function sendFirstMessageOfTicketChannel(
     `/ticket`
   );
 
-  return newTicketMessage;
-}
+  const collector = newTicketMessage.createMessageComponentCollector({
+    componentType: ComponentType.Button,
+    filter: (i) => i.customId === "ticketDelete",
+  });
 
-function createTicketButton() {
-  const closeTicket = new ButtonBuilder()
-    .setCustomId("ticketDelete")
-    .setLabel(`${xMark} Suppression du ticket`)
-    .setStyle(ButtonStyle.Danger);
+  collector.on("collect", async (buttonAction) => {
+    sendDebug(`Suppression du ticket de ${buttonAction.user.tag}.`);
 
-  const row: any = new ActionRowBuilder().addComponents(closeTicket);
+    sentry(
+      buttonAction.user.client,
+      "Ticket",
+      `${whiteCheckMark} Suppression d'un ticket (${ticketChannel.name})`,
+      buttonAction.user
+    );
 
-  return row;
-}
-
-async function actionTicketButton(
-  newTicketMessage: Message,
-  user: User,
-  ticketChannel: TextChannel
-) {
-  try {
-    const buttonAction = await newTicketMessage.awaitMessageComponent({
-      time: 3_600_000,
-    });
-
-    if (buttonAction.customId === "ticketDelete") {
-      sendDebug(`Suppression du ticket de ${user.tag}.`);
-
-      sentry(
-        buttonAction.user.client,
-        "Ticket",
-        `${whiteCheckMark} Suppression d'un ticket (${ticketChannel.name})`,
-        buttonAction.user
-      );
-
-      deleteTicketChannelText(ticketChannel, user);
-
-      return;
-    }
-  } catch (e) {
-    sendError(`Une erreur est survenur sur les actions des tickets (${e}).`);
-  }
+    await deleteTicketChannelText(ticketChannel, buttonAction.user);
+  });
 }

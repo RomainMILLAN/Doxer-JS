@@ -33,7 +33,7 @@ export const command: SlashCommand = {
     }
 
     if (city == null || city == "") {
-      interaction.reply({
+      await interaction.reply({
         embeds: [
           new EmbedBuilder()
             .setTitle(`${xMark} Météo`)
@@ -54,7 +54,7 @@ export const command: SlashCommand = {
     }
 
     if (!isConfigure(process.env.OPEN_WEATHER_API)) {
-      interaction.reply({
+      await interaction.reply({
         embeds: [
           new EmbedBuilder()
             .setTitle(`${xMark} Météo`)
@@ -82,7 +82,7 @@ export const command: SlashCommand = {
       const response = await fetch(openWeatherMapApiUrl);
       const data = await response.json();
 
-      interaction.reply({
+      await interaction.reply({
         embeds: [
           new EmbedBuilder()
             .setTitle(`${weatherMark} Météo: ${data.name}`)
@@ -111,7 +111,7 @@ export const command: SlashCommand = {
         ],
       });
     } catch {
-      interaction.reply({
+      await interaction.reply({
         embeds: [
           new EmbedBuilder()
             .setTitle(`${xMark} Météo`)

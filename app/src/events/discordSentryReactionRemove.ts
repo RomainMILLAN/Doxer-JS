@@ -16,12 +16,9 @@ const event: BotEvent = {
 			reaction = await reaction.fetch();
 		}
 
-    if (reaction.message.partial) {
-      await reaction.message.fetch();
-    }
-
-    //@ts-ignore
-    const message: Message = reaction.message;
+    const message: Message = reaction.message.partial
+      ? await reaction.message.fetch()
+      : reaction.message as Message;
 
     if (isDiscordSentryBlacklisted(message.channel.id)) {
       return;

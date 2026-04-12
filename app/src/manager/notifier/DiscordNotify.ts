@@ -1,5 +1,5 @@
 export class DiscordNotify {
-  public readonly webhookUrl: string;
+  public readonly webhookUrl: string | undefined;
 
   public constructor(webhookUrl?: string) {
     if (webhookUrl) this.webhookUrl = webhookUrl;
@@ -7,13 +7,8 @@ export class DiscordNotify {
       this.webhookUrl = process.env.DISCORD_WEBHOOK_URL;
   }
 
-  public async send(body): Promise<Response> {
-    if (
-      this.webhookUrl === undefined ||
-      this.webhookUrl === "" ||
-      this.webhookUrl === null
-    )
-      return;
+  public async send(body: Record<string, unknown>): Promise<Response | undefined> {
+    if (!this.webhookUrl) return undefined;
 
     const response = await fetch(this.webhookUrl, {
       method: "POST",

@@ -2,7 +2,8 @@ import {
   Collection,
   CommandInteraction,
   SlashCommandBuilder,
-  SlashCommand,
+  SlashCommandOptionsOnlyBuilder,
+  SlashCommandSubcommandsOnlyBuilder,
 } from "discord.js";
 
 declare global {
@@ -16,7 +17,7 @@ declare global {
       R_MEMBER: string;
       TC_SENTRY: string;
       TC_DISCORD_SENTRY: string;
-      VC_CATEGORY: string;
+
       OPEN_WEATHER_API: string;
       WEATHER_DEFAULT_CITY: string;
       DISCORD_SENTRY_BLACKLIST: string;
@@ -28,6 +29,7 @@ declare global {
       APP_DEBUGING: string;
       APP_SENTRY: string;
       
+      DISCORD_WEBHOOK_URL: string;
       SERVICE_NAME: string;
       SIGNAL_API_HOST: string;
       SIGNAL_API_SENDER_NUMBER: string;
@@ -46,11 +48,12 @@ export interface BotEvent {
   name: string;
   type: string;
   once?: boolean | false;
-  execute: (...args) => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  execute: (...args: any[]) => void | Promise<void>;
 }
 
 export interface SlashCommand {
   name: string;
-  data: SlashCommandBuilder | any;
+  data: SlashCommandBuilder | SlashCommandOptionsOnlyBuilder | SlashCommandSubcommandsOnlyBuilder;
   execute: (interaction: CommandInteraction) => Promise<void>;
 }

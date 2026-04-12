@@ -12,7 +12,7 @@ export const command: SlashCommand = {
     .setName("wifi")
     .setDescription("Affiche les informations du wifi"),
   execute: async (interaction) => {
-    interaction.reply({
+    await interaction.reply({
       embeds: [
         new EmbedBuilder()
           .setTitle(`${robotMark} Doxer JS`)

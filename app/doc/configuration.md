@@ -69,10 +69,6 @@ Cette variable doit contenir l'identifiant d'un channel texte.
 `SIGNAL_API_SENDER_NUMBER` désigne le numéro de départ pour le message signal pour le monitoring.<br/>
 `SIGNAL_API_RECEIVER` désigne le receveur pour le message signal pour le monitoring. (*Cela peut être un numéro, ou un identifiant de groupe.*)<br/>
 
-### VoiceClick Category
-
-La variable d'environnement `VC_CATEGORY` indique à VoiceClick la catégorie ou crée les channels vocaux.
-
 ### Open Weather API
 
 La variable d'environnement `OPEN_WEATHER_API` est la clef API pour faire appelle aux service de l'API de Open Weather Map.

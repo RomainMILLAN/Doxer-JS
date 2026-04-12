@@ -15,7 +15,7 @@ export const command: SlashCommand = {
     .setName("info")
     .setDescription("Affiche les informations du bot"),
   execute: async (interaction) => {
-    interaction.reply({
+    await interaction.reply({
       embeds: [
         new EmbedBuilder()
           .setTitle(`${robotMark} Doxer JS`)
@@ -55,7 +55,5 @@ function createRowActionButton() {
     .setLabel("Repository Github")
     .setStyle(ButtonStyle.Link);
 
-  const row: any = new ActionRowBuilder().addComponents(romainMillanLink, githubButtonLink);
-
-  return row;
+  return new ActionRowBuilder<ButtonBuilder>().addComponents(romainMillanLink, githubButtonLink);
 }

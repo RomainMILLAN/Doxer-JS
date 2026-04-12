@@ -1,0 +1,5 @@
+.git
+.env
+app/node_modules
+app/dist
+app/logs

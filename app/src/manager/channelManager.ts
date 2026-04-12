@@ -46,6 +46,6 @@ export function createTicketChannelText(user: User, guild: Guild) {
   });
 }
 
-export function deleteTicketChannelText(channel: TextChannel, user: User) {
-  channel.delete(`Ticket close by ${user.tag}`);
+export async function deleteTicketChannelText(channel: TextChannel, user: User) {
+  await channel.delete(`Ticket close by ${user.tag}`);
 }

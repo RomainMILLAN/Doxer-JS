@@ -1,7 +1,7 @@
 export class SignalNotify {
-  public host: string;
-  public senderNumber: string;
-  public receiver: string;
+  public host: string | undefined;
+  public senderNumber: string | undefined;
+  public receiver: string | undefined;
 
   public constructor(host?: string, sender?: string, receiver?: string) {
     this.setData(
@@ -11,12 +11,9 @@ export class SignalNotify {
     );
   }
 
-  public async send(message: string): Promise<Response> {
-    if (this.host === undefined || this.host === null || this.host === ""
-      || this.senderNumber === undefined || this.senderNumber === null || this.senderNumber === ""
-      || this.receiver === undefined || this.receiver === null || this.receiver === ""
-    ) {
-      return;
+  public async send(message: string): Promise<Response | undefined> {
+    if (!this.host || !this.senderNumber || !this.receiver) {
+      return undefined;
     }
 
     const body = JSON.stringify({

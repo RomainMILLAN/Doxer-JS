@@ -1,6 +1,6 @@
 import { Colors, SlashCommandBuilder } from "discord.js";
 import { SlashCommand } from "../../../types";
-import { EmbedBuilder } from "@discordjs/builders";
+import { EmbedBuilder } from "discord.js";
 import { createTicket } from "../../manager/ticketManager";
 import { labelMark } from "../../manager/enum/icon";
 
@@ -20,10 +20,11 @@ export const command: SlashCommand = {
       ephemeral: true,
     });
 
+    if (!interaction.guild) return;
     const isTicketCreated = await createTicket(interaction.user, interaction.guild);
 
     if (isTicketCreated) {
-      response.edit({
+      await response.edit({
         embeds: [
           new EmbedBuilder()
             .setTitle(`${labelMark} Ticket`)
@@ -32,7 +33,7 @@ export const command: SlashCommand = {
         ],
       });
     }else {
-      response.edit({
+      await response.edit({
         embeds: [
           new EmbedBuilder()
             .setTitle(`${labelMark} Ticket`)

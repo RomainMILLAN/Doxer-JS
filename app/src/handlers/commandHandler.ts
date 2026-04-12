@@ -13,7 +13,7 @@ module.exports = async (client: Client) => {
     const commandsPath = path.join(foldersPath, folder);
     const commandFiles = fs
       .readdirSync(commandsPath)
-      .filter((file) => file.endsWith(".js"));
+      .filter((file: string) => file.endsWith(".js"));
 
     for (const file of commandFiles) {
       const filePath = path.join(commandsPath, file);
