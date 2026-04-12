@@ -1,4 +1,4 @@
-import { SlashCommandBuilder, Colors, EmbedBuilder } from "discord.js";
+import { SlashCommandBuilder, Colors, EmbedBuilder, MessageFlags } from "discord.js";
 import { SlashCommand } from "../../../types";
 import { sentry } from "../../manager/sentry";
 import {
@@ -26,7 +26,7 @@ export const command: SlashCommand = {
             .setDescription(`Vous devez indiquer un utilisateur valide`)
             .setColor(Colors.Red),
         ],
-        ephemeral: true,
+        flags: [MessageFlags.Ephemeral],
       });
 
       sentry(
@@ -67,7 +67,7 @@ export const command: SlashCommand = {
           )
           .setColor(Colors.Navy),
       ],
-      ephemeral: true,
+      flags: [MessageFlags.Ephemeral],
     });
 
     sentry(

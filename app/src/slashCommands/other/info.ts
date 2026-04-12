@@ -3,6 +3,7 @@ import {
   ButtonBuilder,
   ButtonStyle,
   EmbedBuilder,
+  MessageFlags,
   SlashCommandBuilder,
 } from "discord.js";
 import { SlashCommand } from "../../../types";
@@ -29,7 +30,7 @@ export const command: SlashCommand = {
           }),
       ],
       components: [createRowActionButton()],
-      ephemeral: true,
+      flags: [MessageFlags.Ephemeral],
     });
 
     sentry(

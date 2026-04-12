@@ -3,6 +3,7 @@ import {
   Colors,
   EmbedBuilder,
   GuildMemberRoleManager,
+  MessageFlags,
   User,
   GuildMember,
   PermissionsBitField,
@@ -66,7 +67,7 @@ export const command: SlashCommand = {
             .setDescription(`L'utilisateur n'a pas été trouvé.`)
             .setColor(Colors.Red),
         ],
-        ephemeral: true,
+        flags: [MessageFlags.Ephemeral],
       });
       return;
     }

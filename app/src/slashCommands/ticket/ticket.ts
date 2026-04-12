@@ -1,4 +1,4 @@
-import { Colors, SlashCommandBuilder } from "discord.js";
+import { Colors, MessageFlags, SlashCommandBuilder } from "discord.js";
 import { SlashCommand } from "../../../types";
 import { EmbedBuilder } from "discord.js";
 import { createTicket } from "../../manager/ticketManager";
@@ -17,7 +17,7 @@ export const command: SlashCommand = {
           .setColor(Colors.Grey)
           .setDescription(`Création de votre ticket en cour...`),
       ],
-      ephemeral: true,
+      flags: [MessageFlags.Ephemeral],
     });
 
     if (!interaction.guild) return;

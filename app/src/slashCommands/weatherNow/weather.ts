@@ -1,4 +1,4 @@
-import { SlashCommandBuilder, Colors, EmbedBuilder } from "discord.js";
+import { SlashCommandBuilder, Colors, EmbedBuilder, MessageFlags } from "discord.js";
 import { SlashCommand } from "../../../types";
 import { sentry } from "../../manager/sentry";
 import { getFormattedTime } from "../../manager/timeManager";
@@ -40,7 +40,7 @@ export const command: SlashCommand = {
             .setDescription(`Vous devez spécifier une ville.`)
             .setColor(Colors.Red),
         ],
-        ephemeral: true,
+        flags: [MessageFlags.Ephemeral],
       });
 
       sentry(
@@ -63,7 +63,7 @@ export const command: SlashCommand = {
             )
             .setColor(Colors.Red),
         ],
-        ephemeral: true,
+        flags: [MessageFlags.Ephemeral],
       });
 
       sentry(
@@ -120,7 +120,7 @@ export const command: SlashCommand = {
             )
             .setColor(Colors.Red),
         ],
-        ephemeral: true,
+        flags: [MessageFlags.Ephemeral],
       });
     }
   },

@@ -1,5 +1,6 @@
 import {
   ChannelType,
+  MessageFlags,
   PermissionsBitField,
   SlashCommandBuilder,
 } from "discord.js";
@@ -79,7 +80,7 @@ export const command: SlashCommand = {
             }
           ),
       ],
-      ephemeral: true,
+      flags: [MessageFlags.Ephemeral],
     });
 
     sentry(

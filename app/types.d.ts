@@ -1,4 +1,5 @@
 import {
+  ChatInputCommandInteraction,
   Collection,
   CommandInteraction,
   SlashCommandBuilder,
@@ -55,5 +56,5 @@ export interface BotEvent {
 export interface SlashCommand {
   name: string;
   data: SlashCommandBuilder | SlashCommandOptionsOnlyBuilder | SlashCommandSubcommandsOnlyBuilder;
-  execute: (interaction: CommandInteraction) => Promise<void>;
+  execute: (interaction: ChatInputCommandInteraction) => Promise<void>;
 }

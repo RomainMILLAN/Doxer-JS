@@ -2,6 +2,7 @@ import {
   CommandInteraction,
   GuildMember,
   GuildMemberRoleManager,
+  MessageFlags,
 } from "discord.js";
 import sentry from "./sentry";
 import { xMark } from "./enum/icon";
@@ -70,7 +71,7 @@ async function slashCommandNotAuthorized(
 ) {
   await interaction.reply({
     embeds: [restrictionMemberEmbed()],
-    ephemeral: true,
+    flags: [MessageFlags.Ephemeral],
   });
 
   sentry(
