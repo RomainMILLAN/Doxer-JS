@@ -6,7 +6,7 @@ import { isConfigureEnabled } from "../manager/configurationManager";
 
 const event: BotEvent = {
   name: "discordSentryReactionRemove",
-  type: Events.MessageReactionRemoveAll,
+  type: Events.MessageReactionRemove,
   async execute(reaction: MessageReaction, user: User) {
     if (!isConfigureEnabled(process.env.APP_SENTRY)) {
       return;

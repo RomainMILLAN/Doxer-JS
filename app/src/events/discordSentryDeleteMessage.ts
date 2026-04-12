@@ -11,12 +11,20 @@ const event: BotEvent = {
       return;
     }
 
+    if (message.partial) {
+      try {
+        message = await message.fetch();
+      } catch {
+        return;
+      }
+    }
+
     discordSentry(
       message.client,
       message.channel,
       "Delete message",
       message.content,
-      message.member.user
+      message.member?.user ?? message.author ?? null
     );
   },
 };

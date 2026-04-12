@@ -30,22 +30,22 @@ export const command: SlashCommand = {
         "DiscordProfiler/Avatar",
         "Utilisateur indiqué non trouvée",
         interaction.user,
-        `/avatar user:${user.id}`
+        `/avatar user:${interaction.options.get('user')?.value ?? 'unknown'}`
       );
 
       return;
     }
+
+    const avatarUrl = user.avatarURL() ?? user.defaultAvatarURL;
 
     interaction.reply({
       embeds: [
         new EmbedBuilder()
           .setTitle(`${windowMark} Avatar de ${user.displayName}`)
           .setDescription(
-            `Cliquez [ici](${user
-              .avatarURL()
-              .toString()}) pour l\'afficher en grand`
+            `Cliquez [ici](${avatarUrl}) pour l\'afficher en grand`
           )
-          .setImage(user.avatarURL().toString())
+          .setImage(avatarUrl)
           .setColor(Colors.Navy),
       ],
     });

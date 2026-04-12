@@ -17,8 +17,9 @@ export function sentry(
   if (!isConfigure(process.env.TC_SENTRY) || !isSentryEnabled()) return;
 
   client.guilds.fetch(process.env.GUILD_ID).then((r) => {
-    r.channels.fetch(process.env.TC_SENTRY).then((c: TextChannel) => {
-      var embed = new EmbedBuilder()
+    r.channels.fetch(process.env.TC_SENTRY).then((c) => {
+      if (!c?.isTextBased()) return;
+      const embed = new EmbedBuilder()
         .setTitle(`${writeMark} SENTRY/${title}`)
         .setDescription(`${title} - ${user.toString()}\n > ${description}`)
         .setColor("Orange")
@@ -48,16 +49,19 @@ export function discordSentry(
   channel: Channel,
   type: string,
   description: string,
-  user: User,
+  user: User | null,
 ) {
   if (!isConfigure(process.env.TC_SENTRY) || !isSentryEnabled()) return;
 
+  const userDisplay = user ? user.toString() : "Inconnu";
+
   client.guilds.fetch(process.env.GUILD_ID).then((r) => {
-    r.channels.fetch(process.env.TC_DISCORD_SENTRY).then((c: TextChannel) => {
-      var embed = new EmbedBuilder()
+    r.channels.fetch(process.env.TC_DISCORD_SENTRY).then((c) => {
+      if (!c?.isTextBased()) return;
+      const embed = new EmbedBuilder()
         .setTitle(`${writeMark} DISCORD SENTRY/${type.toUpperCase()}`)
         .setDescription(
-          `${type} - ${user.toString()}\n > ${channel.toString()}\n > ${description}`
+          `${type} - ${userDisplay}\n > ${channel.toString()}\n > ${description}`
         )
         .setColor("Orange")
         .setFooter({
@@ -71,7 +75,8 @@ export function discordSentry(
     });
   });
 
-  sendDiscordSentryLog(`${user.globalName}(${user.id}) | [${type}] ${channel.toString()}: ${description}`);
+  const userLog = user ? `${user.globalName}(${user.id})` : "Inconnu";
+  sendDiscordSentryLog(`${userLog} | [${type}] ${channel.toString()}: ${description}`);
 }
 
 export default sentry;

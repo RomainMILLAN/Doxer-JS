@@ -1,8 +1,6 @@
 import { writeFileSync } from "fs";
 import { getCurrentFormattedDateString, getCurrentFormattedTimeString, getCurrentFormattedDateFileString } from "./timeManager";
 
-const date = new Date();
-
 export const colors = {
   reset: "\x1b[0m",
   bright: "\x1b[1m",
@@ -62,17 +60,9 @@ function prefixTimestampTemplated() {
   return (
     colors.bright +
     "[" +
-    date.getDay() +
-    "/" +
-    (date.getMonth() + 1) +
-    "/" +
-    date.getFullYear() +
+    getCurrentFormattedDateString() +
     " " +
-    date.getHours() +
-    ":" +
-    date.getMinutes() +
-    ":" +
-    date.getSeconds() +
+    getCurrentFormattedTimeString() +
     "]" +
     colors.reset +
     " "
@@ -135,7 +125,7 @@ export function sendError(body: string) {
 
 export function sendConsole(body: string) {
   console.log(
-    prefixEnvironmentStageTemplated() + " " + this.prefixTimestampTemplated() + body
+    prefixEnvironmentStageTemplated() + " " + prefixTimestampTemplated() + body
   );
 }
 

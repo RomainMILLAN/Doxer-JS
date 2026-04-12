@@ -27,8 +27,9 @@ export const command: SlashCommand = {
   execute: async (interaction) => {
     let city = process.env.WEATHER_DEFAULT_CITY;
 
-    if (null != interaction.options.get("city")) {
-      city = interaction.options.get("city").value.toString();
+    const cityOption = interaction.options.get("city");
+    if (cityOption?.value) {
+      city = cityOption.value.toString();
     }
 
     if (city == null || city == "") {
@@ -77,39 +78,50 @@ export const command: SlashCommand = {
 
     const openWeatherMapApiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${process.env.OPEN_WEATHER_API}&lang=fr`;
 
-    let response;
+    try {
+      const response = await fetch(openWeatherMapApiUrl);
+      const data = await response.json();
 
-    fetch(openWeatherMapApiUrl).then((response) => {
-      response.json().then((data) => {
-        interaction.reply({
-          embeds: [
-            new EmbedBuilder()
-              .setTitle(`${weatherMark} Météo: ${data.name}`)
-              .setThumbnail(
-                `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`
-              )
-              .addFields([
-                {
-                  name: "**Température**",
-                  value: `${weatherTermostat} ${data.main.temp}°C\n${arrowUpMark} ${data.main.temp_max}°C\n${arrowDownMark} ${data.main.temp_min}°C`,
-                  inline: true,
-                },
-                {
-                  name: "**Informations**",
-                  value: `${weatherWind} ${data.wind.speed}km/h\n${weatherHumidity} ${data.main.humidity}%\n${weatherPressure} ${data.main.pressure}hPa`,
-                  inline: true,
-                },
-                {
-                  name: "**Ephéméride**",
-                  value: `${weatherSunrise} ${getFormattedTime(
-                    data.sys.sunrise
-                  )}\n${weatherSunset} ${getFormattedTime(data.sys.sunset)}`,
-                  inline: true,
-                },
-              ]),
-          ],
-        });
+      interaction.reply({
+        embeds: [
+          new EmbedBuilder()
+            .setTitle(`${weatherMark} Météo: ${data.name}`)
+            .setThumbnail(
+              `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`
+            )
+            .addFields([
+              {
+                name: "**Température**",
+                value: `${weatherTermostat} ${data.main.temp}°C\n${arrowUpMark} ${data.main.temp_max}°C\n${arrowDownMark} ${data.main.temp_min}°C`,
+                inline: true,
+              },
+              {
+                name: "**Informations**",
+                value: `${weatherWind} ${data.wind.speed}km/h\n${weatherHumidity} ${data.main.humidity}%\n${weatherPressure} ${data.main.pressure}hPa`,
+                inline: true,
+              },
+              {
+                name: "**Ephéméride**",
+                value: `${weatherSunrise} ${getFormattedTime(
+                  data.sys.sunrise
+                )}\n${weatherSunset} ${getFormattedTime(data.sys.sunset)}`,
+                inline: true,
+              },
+            ]),
+        ],
       });
-    });
+    } catch {
+      interaction.reply({
+        embeds: [
+          new EmbedBuilder()
+            .setTitle(`${xMark} Météo`)
+            .setDescription(
+              `Une erreur est survenue, merci de réessayer plus tard.`
+            )
+            .setColor(Colors.Red),
+        ],
+        ephemeral: true,
+      });
+    }
   },
 };
